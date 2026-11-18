@@ -1,0 +1,2860 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMPUTER LAB ADVENTURE - Jelajahi Dunia Sistem Komputer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome untuk Ikon Tambahan -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Fredoka', 'sans-serif'],
+                    },
+                    colors: {
+                        electric: '#2563EB',
+                        cyberPurple: '#7C3AED',
+                        neonCyan: '#06B6D4',
+                        deepSpace: '#0F172A',
+                        labCard: '#1E293B'
+                    },
+                    animation: {
+                        'float': 'float 3.5s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2.5s infinite',
+                        'data-flow': 'dataFlow 2s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 15px rgba(6, 182, 212, 0.5)' },
+                            '50%': { boxShadow: '0 0 30px rgba(124, 58, 237, 0.8)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: radial-gradient(circle at top right, #1e1b4b, #0f172a 55%, #090d16 100%);
+            color: #f8fafc;
+            overflow-x: hidden;
+            user-select: none;
+        }
+        input, textarea, select {
+            user-select: text;
+        }
+        /* Grid Background Futuristik */
+        .cyber-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(124, 58, 237, 0.06) 1px, transparent 1px);
+        }
+        /* Glassmorphism Card */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.78);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+        }
+        .glass-light {
+            background: rgba(255, 255, 255, 0.96);
+            color: #0f172a;
+            border: 2px solid #38bdf8;
+        }
+        /* Tombol 3D Arcade */
+        .btn-3d {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 0 rgba(15, 23, 42, 0.6);
+        }
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.6);
+        }
+        /* Animasi Paket Data Simulasi */
+        .packet-dot {
+            transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        /* Print Styling untuk LKPD */
+        @media print {
+            body { background: white !important; color: black !important; }
+            .no-print { display: none !important; }
+            #lkpd-printable {
+                background: white !important;
+                color: black !important;
+                box-shadow: none !important;
+                border: none !important;
+                width: 100% !important;
+            }
+            input, textarea, select {
+                border: 1px solid #333 !important;
+                color: black !important;
+                background: white !important;
+            }
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #06b6d4, #7c3aed); border-radius: 99px; }
+    </style>
+</head>
+<body class="cyber-grid min-h-screen flex flex-col font-sans">
+
+    <!-- ================= HEADER / TOP BAR ================= -->
+    <header class="no-print sticky top-0 z-40 glass-panel border-b border-cyan-500/30 px-3 sm:px-6 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- Logo & Judul -->
+            <div onclick="navigateTo('home')" class="flex items-center gap-3 cursor-pointer group">
+                <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-600 to-purple-600 p-0.5 shadow-lg group-hover:scale-105 transition">
+                    <div class="w-full h-full bg-slate-900 rounded-[14px] flex items-center justify-center">
+                        <!-- Custom SVG Logo Komputer Futuristik -->
+                        <svg class="w-7 h-7 text-cyan-400" viewBox="0 0 64 64" fill="none">
+                            <rect x="8" y="10" width="48" height="32" rx="6" stroke="currentColor" stroke-width="4" fill="#1e293b"/>
+                            <path d="M22 22L28 26L22 30" stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="32" y1="30" x2="42" y2="30" stroke="#a855f7" stroke-width="3.5" stroke-linecap="round"/>
+                            <path d="M24 42L20 52H44L40 42" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                            <line x1="16" y1="52" x2="48" y2="52" stroke="#06b6d4" stroke-width="4" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-display text-lg sm:text-xl font-bold tracking-wide bg-gradient-to-r from-cyan-300 via-white to-purple-300 bg-clip-text text-transparent leading-tight">
+                        COMPUTER LAB ADVENTURE
+                    </h1>
+                    <p class="text-[11px] sm:text-xs text-cyan-300 font-medium">Informatika Kelas VII • SMP Negeri 2 Kalianda</p>
+                </div>
+            </div>
+
+            <!-- Bar Status Progres, Bintang, & Kontrol Audio -->
+            <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+                <!-- Poin & Bintang -->
+                <div class="flex items-center gap-2 bg-slate-900/90 border border-amber-400/40 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-star text-amber-400 animate-pulse"></i>
+                    <span id="header-stars" class="font-display font-bold text-amber-300 text-sm">0</span>
+                    <span class="text-slate-500">|</span>
+                    <i class="fa-solid fa-bolt text-cyan-400"></i>
+                    <span id="header-xp" class="font-display font-bold text-cyan-300 text-sm">0 XP</span>
+                </div>
+
+                <!-- Kontrol Musik BGM -->
+                <button id="btn-bgm" onclick="AudioEngine.toggleBGM()" title="Musik Latar" class="p-2.5 rounded-xl bg-slate-800 hover:bg-purple-700 border border-purple-500/40 text-purple-300 transition flex items-center gap-1.5 text-xs font-semibold">
+                    <i id="icon-bgm" class="fa-solid fa-music"></i>
+                    <span class="hidden md:inline" id="text-bgm">Musik: OFF</span>
+                </button>
+
+                <!-- Kontrol SFX -->
+                <button id="btn-sfx" onclick="AudioEngine.toggleSFX()" title="Efek Suara" class="p-2.5 rounded-xl bg-slate-800 hover:bg-cyan-700 border border-cyan-500/40 text-cyan-300 transition flex items-center gap-1.5 text-xs font-semibold">
+                    <i id="icon-sfx" class="fa-solid fa-volume-high"></i>
+                </button>
+
+                <!-- Slider Volume -->
+                <div class="hidden sm:flex items-center gap-1.5 bg-slate-800/90 px-2.5 py-1.5 rounded-xl border border-slate-700">
+                    <i class="fa-solid fa-sliders text-xs text-slate-400"></i>
+                    <input id="volume-slider" type="range" min="0" max="1" step="0.1" value="0.8" onchange="AudioEngine.setVolume(this.value)" class="w-16 accent-cyan-400 cursor-pointer">
+                </div>
+
+                <!-- Tombol Petunjuk -->
+                <button onclick="openHelpModal()" class="p-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-circle-question"></i>
+                    <span class="hidden sm:inline">Petunjuk</span>
+                </button>
+
+                <!-- Tombol Home -->
+                <button id="btn-home-nav" onclick="navigateTo('home')" class="hidden p-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white font-bold text-xs flex items-center gap-1.5 shadow">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Beranda</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= KONTEN UTAMA DINAMIS ================= -->
+    <main id="app-container" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-6">
+        <!-- Konten dirender secara dinamis melalui JavaScript -->
+    </main>
+
+    <!-- ================= ASISTEN ROBOT 3D MENGAMBANG ================= -->
+    <div id="robot-companion" class="no-print fixed bottom-4 right-4 z-40 flex items-end gap-2 max-w-[310px] sm:max-w-sm">
+        <div id="robot-bubble" class="glass-panel border-2 border-cyan-400/60 p-3 rounded-2xl rounded-br-none text-xs sm:text-sm text-slate-100 shadow-2xl transition-all duration-300">
+            <div class="flex items-center justify-between mb-1">
+                <span class="font-display font-bold text-cyan-300 flex items-center gap-1">
+                    <i class="fa-solid fa-robot"></i> Robo-KAI (Asisten Lab)
+                </span>
+                <button onclick="speakRobotMessage()" title="Bacakan Pesan Robot" class="text-cyan-400 hover:text-white px-1.5 py-0.5 rounded bg-slate-800">
+                    <i class="fa-solid fa-volume-high text-[11px]"></i>
+                </button>
+            </div>
+            <p id="robot-text" class="leading-relaxed text-slate-200">Halo Sobat Informatika! Selamat datang di Computer Lab Adventure SMPN 2 Kalianda. Yuk mulai petualanganmu!</p>
+        </div>
+        <!-- Avatar Robot 3D SVG -->
+        <button onclick="interactWithRobot()" title="Klik Robo-KAI untuk tips!" class="w-16 h-16 sm:w-20 sm:h-20 shrink-0 animate-float focus:outline-none group">
+            <svg viewBox="0 0 120 120" class="w-full h-full drop-shadow-[0_8px_16px_rgba(6,182,212,0.5)] group-hover:scale-105 transition">
+                <defs>
+                    <linearGradient id="roboHead" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#ffffff"/>
+                        <stop offset="60%" stop-color="#cbd5e1"/>
+                        <stop offset="100%" stop-color="#94a3b8"/>
+                    </linearGradient>
+                    <linearGradient id="roboVisor" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#0f172a"/>
+                        <stop offset="50%" stop-color="#1e1b4b"/>
+                        <stop offset="100%" stop-color="#0f172a"/>
+                    </linearGradient>
+                    <linearGradient id="roboAccent" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#06b6d4"/>
+                        <stop offset="100%" stop-color="#7c3aed"/>
+                    </linearGradient>
+                </defs>
+                <!-- Antena -->
+                <line x1="60" y1="10" x2="60" y2="26" stroke="#38bdf8" stroke-width="5" stroke-linecap="round"/>
+                <circle cx="60" cy="10" r="6" fill="#06b6d4">
+                    <animate attributeName="fill" values="#06b6d4;#a855f7;#06b6d4" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Telinga / Headset -->
+                <rect x="12" y="45" width="12" height="28" rx="6" fill="url(#roboAccent)"/>
+                <rect x="96" y="45" width="12" height="28" rx="6" fill="url(#roboAccent)"/>
+                <!-- Kepala 3D -->
+                <rect x="22" y="26" width="76" height="64" rx="24" fill="url(#roboHead)" stroke="#38bdf8" stroke-width="3"/>
+                <!-- Layar Wajah -->
+                <rect x="30" y="38" width="60" height="36" rx="14" fill="url(#roboVisor)"/>
+                <!-- Mata Bercahaya -->
+                <circle cx="46" cy="54" r="6.5" fill="#22d3ee">
+                    <animate attributeName="r" values="6.5;6.5;1;6.5" dur="4s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="74" cy="54" r="6.5" fill="#22d3ee">
+                    <animate attributeName="r" values="6.5;6.5;1;6.5" dur="4s" repeatCount="indefinite"/>
+                </circle>
+                <!-- Senyum Digital -->
+                <path d="M52 64 Q60 70 68 64" stroke="#a855f7" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                <!-- Badan Mini -->
+                <path d="M38 94 C38 88, 82 88, 82 94 L88 112 H32 Z" fill="url(#roboAccent)"/>
+                <circle cx="60" cy="102" r="5" fill="#ffffff"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- ================= MODAL PETUNJUK & NOTIFIKASI CUSTOM ================= -->
+    <div id="custom-modal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="glass-panel border-2 border-cyan-400/50 rounded-3xl max-w-xl w-full p-6 relative animate-float" style="animation: none;">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-white flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- ================= SCRIPT UTAMA APLIKASI ================= -->
+    <script>
+        /* =========================================================================
+           1. SISTEM AUDIO TERPADU (Web Audio API untuk SFX/BGM + SpeechSynthesis)
+           ========================================================================= */
+        const AudioEngine = {
+            ctx: null,
+            bgmInterval: null,
+            bgmPlaying: false,
+            sfxEnabled: true,
+            volume: 0.8,
+            synth: window.speechSynthesis || null,
+            isSpeaking: false,
+
+            initCtx() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) this.ctx = new AudioCtx();
+                }
+                if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+
+            setVolume(val) {
+                this.volume = parseFloat(val);
+            },
+
+            toggleSFX() {
+                this.sfxEnabled = !this.sfxEnabled;
+                const icon = document.getElementById('icon-sfx');
+                icon.className = this.sfxEnabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark text-rose-400';
+                if (this.sfxEnabled) this.playClick();
+            },
+
+            playTone(freq, type = 'sine', duration = 0.15, delay = 0) {
+                if (!this.sfxEnabled) return;
+                try {
+                    this.initCtx();
+                    if (!this.ctx) return;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, this.ctx.currentTime + delay);
+                    gain.gain.setValueAtTime(this.volume * 0.25, this.ctx.currentTime + delay);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + delay + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(this.ctx.currentTime + delay);
+                    osc.stop(this.ctx.currentTime + delay + duration);
+                } catch (e) {}
+            },
+
+            playClick() {
+                this.playTone(620, 'triangle', 0.08, 0);
+            },
+
+            playCorrect() {
+                this.playTone(523.25, 'sine', 0.12, 0);      // C5
+                this.playTone(659.25, 'sine', 0.12, 0.1);    // E5
+                this.playTone(783.99, 'sine', 0.25, 0.2);    // G5
+            },
+
+            playWrong() {
+                this.playTone(260, 'sawtooth', 0.18, 0);
+                this.playTone(210, 'sawtooth', 0.25, 0.15);
+            },
+
+            playVictory() {
+                const notes = [523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50];
+                notes.forEach((n, i) => this.playTone(n, 'triangle', 0.18, i * 0.12));
+            },
+
+            toggleBGM() {
+                this.initCtx();
+                const btnText = document.getElementById('text-bgm');
+                const btn = document.getElementById('btn-bgm');
+                if (this.bgmPlaying) {
+                    clearInterval(this.bgmInterval);
+                    this.bgmPlaying = false;
+                    if (btnText) btnText.textContent = 'Musik: OFF';
+                    btn.classList.remove('bg-purple-600', 'text-white');
+                } else {
+                    this.bgmPlaying = true;
+                    if (btnText) btnText.textContent = 'Musik: ON';
+                    btn.classList.add('bg-purple-600', 'text-white');
+                    // Melodi chiptune futuristik lembut
+                    const melody = [261.63, 329.63, 392.00, 493.88, 392.00, 329.63, 293.66, 392.00];
+                    let step = 0;
+                    this.bgmInterval = setInterval(() => {
+                        if (!this.bgmPlaying || !this.ctx) return;
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(melody[step % melody.length], this.ctx.currentTime);
+                        gain.gain.setValueAtTime(this.volume * 0.04, this.ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 0.45);
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start();
+                        osc.stop(this.ctx.currentTime + 0.45);
+                        step++;
+                    }, 500);
+                }
+            },
+
+            speak(text) {
+                if (!this.synth) {
+                    showToast('Browser Anda tidak mendukung fitur narasi suara otomatis.');
+                    return;
+                }
+                this.synth.cancel();
+                const cleanText = text.replace(/<[^>]*>?/gm, '');
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.lang = 'id-ID';
+                utterance.rate = 0.98;
+                utterance.pitch = 1.05;
+                utterance.volume = this.volume;
+
+                // Cari suara Bahasa Indonesia jika tersedia
+                const voices = this.synth.getVoices();
+                const idVoice = voices.find(v => v.lang.includes('id'));
+                if (idVoice) utterance.voice = idVoice;
+
+                utterance.onstart = () => {
+                    this.isSpeaking = true;
+                    updateSpeechUI(true);
+                };
+                utterance.onend = () => {
+                    this.isSpeaking = false;
+                    updateSpeechUI(false);
+                };
+                utterance.onerror = () => {
+                    this.isSpeaking = false;
+                    updateSpeechUI(false);
+                };
+                this.synth.speak(utterance);
+            },
+
+            pauseSpeech() {
+                if (this.synth && this.synth.speaking) {
+                    this.synth.pause();
+                }
+            },
+
+            resumeSpeech() {
+                if (this.synth && this.synth.paused) {
+                    this.synth.resume();
+                }
+            },
+
+            stopSpeech() {
+                if (this.synth) {
+                    this.synth.cancel();
+                    this.isSpeaking = false;
+                    updateSpeechUI(false);
+                }
+            }
+        };
+
+        function updateSpeechUI(speaking) {
+            const badge = document.getElementById('narration-status');
+            if (badge) {
+                badge.innerHTML = speaking 
+                    ? '<span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping mr-1.5"></span> Membacakan materi...'
+                    : '<i class="fa-solid fa-headphones mr-1"></i> Siap membacakan';
+            }
+        }
+
+        /* =========================================================================
+           2. MANAJEMEN PROGRES & PENYIMPANAN (localStorage)
+           ========================================================================= */
+        const DefaultProgress = {
+            materiDone: [false, false, false, false, false],
+            simulasiDone: false,
+            praktikumDone: [false, false, false, false],
+            gamesDone: [false, false, false, false],
+            lkpdDone: false,
+            evalScore: null,
+            stars: 0,
+            xp: 0
+        };
+
+        let userProgress = JSON.parse(localStorage.getItem('cla_progress_2026')) || JSON.parse(JSON.stringify(DefaultProgress));
+
+        function saveProgress() {
+            // Hitung ulang bintang & XP otomatis berdasarkan pencapaian
+            let stars = 0;
+            let xp = 0;
+            userProgress.materiDone.forEach(d => { if (d) { stars += 1; xp += 100; } });
+            if (userProgress.simulasiDone) { stars += 2; xp += 150; }
+            userProgress.praktikumDone.forEach(d => { if (d) { stars += 1; xp += 120; } });
+            userProgress.gamesDone.forEach(d => { if (d) { stars += 2; xp += 150; } });
+            if (userProgress.lkpdDone) { stars += 2; xp += 200; }
+            if (userProgress.evalScore !== null && userProgress.evalScore >= 75) { stars += 3; xp += 300; }
+
+            userProgress.stars = stars;
+            userProgress.xp = xp;
+            localStorage.setItem('cla_progress_2026', JSON.stringify(userProgress));
+            updateHeaderStats();
+        }
+
+        function getOverallPercentage() {
+            let totalTasks = 16; // 5 materi + 1 simulasi + 4 praktikum + 4 game + 1 lkpd + 1 evaluasi
+            let done = 0;
+            done += userProgress.materiDone.filter(Boolean).length;
+            if (userProgress.simulasiDone) done++;
+            done += userProgress.praktikumDone.filter(Boolean).length;
+            done += userProgress.gamesDone.filter(Boolean).length;
+            if (userProgress.lkpdDone) done++;
+            if (userProgress.evalScore !== null) done++;
+            return Math.round((done / totalTasks) * 100);
+        }
+
+        function updateHeaderStats() {
+            document.getElementById('header-stars').textContent = userProgress.stars;
+            document.getElementById('header-xp').textContent = userProgress.xp + ' XP';
+        }
+
+        /* =========================================================================
+           3. ILUSTRASI SVG PERANGKAT KOMPUTER (Kualitas Tinggi & Tajam)
+           ========================================================================= */
+        const DeviceSVGs = {
+            komputerSet: `<svg viewBox="0 0 240 150" class="w-full h-36 mx-auto">
+                <rect x="25" y="15" width="110" height="75" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                <rect x="33" y="23" width="94" height="58" rx="4" fill="#0f172a"/>
+                <circle cx="80" cy="52" r="14" fill="#06b6d4" opacity="0.3"/>
+                <path d="M72 52L78 58L90 46" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+                <path d="M68 90L62 108H98L92 90" fill="#64748b"/>
+                <rect x="52" y="108" width="56" height="6" rx="3" fill="#94a3b8"/>
+                <!-- CPU Tower -->
+                <rect x="150" y="15" width="48" height="100" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="3"/>
+                <circle cx="174" cy="35" r="6" fill="#22d3ee"/>
+                <rect x="160" y="50" width="28" height="6" rx="2" fill="#475569"/>
+                <rect x="160" y="62" width="28" height="6" rx="2" fill="#475569"/>
+                <!-- Keyboard & Mouse -->
+                <rect x="25" y="120" width="105" height="18" rx="4" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
+                <rect x="142" y="120" width="22" height="18" rx="9" fill="#334155" stroke="#a855f7" stroke-width="2"/>
+            </svg>`,
+
+            keyboard: `<svg viewBox="0 0 160 100" class="w-28 h-20 mx-auto">
+                <rect x="10" y="20" width="140" height="60" rx="10" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                <g fill="#38bdf8" opacity="0.85">
+                    <rect x="20" y="30" width="12" height="10" rx="2"/><rect x="36" y="30" width="12" height="10" rx="2"/>
+                    <rect x="52" y="30" width="12" height="10" rx="2"/><rect x="68" y="30" width="12" height="10" rx="2"/>
+                    <rect x="84" y="30" width="12" height="10" rx="2"/><rect x="100" y="30" width="12" height="10" rx="2"/>
+                    <rect x="116" y="30" width="24" height="10" rx="2"/>
+                    <rect x="20" y="45" width="16" height="10" rx="2"/><rect x="40" y="45" width="12" height="10" rx="2"/>
+                    <rect x="56" y="45" width="12" height="10" rx="2"/><rect x="72" y="45" width="12" height="10" rx="2"/>
+                    <rect x="88" y="45" width="12" height="10" rx="2"/><rect x="104" y="45" width="36" height="10" rx="2"/>
+                    <rect x="20" y="60" width="22" height="10" rx="2"/><rect x="46" y="60" width="66" height="10" rx="2"/>
+                    <rect x="116" y="60" width="24" height="10" rx="2"/>
+                </g>
+            </svg>`,
+
+            mouse: `<svg viewBox="0 0 120 120" class="w-24 h-20 mx-auto">
+                <path d="M60 10 C60 2, 75 2, 75 14" stroke="#a855f7" stroke-width="3" fill="none"/>
+                <rect x="35" y="16" width="50" height="86" rx="25" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                <line x1="60" y1="16" x2="60" y2="52" stroke="#38bdf8" stroke-width="2.5"/>
+                <line x1="35" y1="52" x2="85" y2="52" stroke="#38bdf8" stroke-width="2.5"/>
+                <rect x="56" y="26" width="8" height="18" rx="4" fill="#22d3ee"/>
+            </svg>`,
+
+            scanner: `<svg viewBox="0 0 140 110" class="w-28 h-20 mx-auto">
+                <rect x="20" y="55" width="100" height="35" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                <path d="M22 55 L40 20 L118 20 L118 55 Z" fill="#334155" stroke="#a855f7" stroke-width="2.5"/>
+                <line x1="30" y1="68" x2="110" y2="68" stroke="#22d3ee" stroke-width="3"/>
+                <circle cx="105" cy="78" r="4" fill="#10b981"/>
+            </svg>`,
+
+            cpu: `<svg viewBox="0 0 120 120" class="w-24 h-20 mx-auto">
+                <rect x="26" y="26" width="68" height="68" rx="10" fill="#1e293b" stroke="#a855f7" stroke-width="3.5"/>
+                <rect x="38" y="38" width="44" height="44" rx="6" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+                <text x="60" y="65" text-anchor="middle" fill="#22d3ee" font-weight="bold" font-size="16" font-family="sans-serif">CPU</text>
+                <g stroke="#38bdf8" stroke-width="3" stroke-linecap="round">
+                    <line x1="40" y1="14" x2="40" y2="24"/><line x1="60" y1="14" x2="60" y2="24"/><line x1="80" y1="14" x2="80" y2="24"/>
+                    <line x1="40" y1="96" x2="40" y2="106"/><line x1="60" y1="96" x2="60" y2="106"/><line x1="80" y1="96" x2="80" y2="106"/>
+                    <line x1="14" y1="40" x2="24" y2="40"/><line x1="14" y1="60" x2="24" y2="60"/><line x1="14" y1="80" x2="24" y2="80"/>
+                    <line x1="96" y1="40" x2="106" y2="40"/><line x1="96" y1="60" x2="106" y2="60"/><line x1="96" y1="80" x2="106" y2="80"/>
+                </g>
+            </svg>`,
+
+            ram: `<svg viewBox="0 0 160 90" class="w-28 h-20 mx-auto">
+                <rect x="12" y="24" width="136" height="42" rx="6" fill="#065f46" stroke="#34d399" stroke-width="3"/>
+                <rect x="24" y="33" width="20" height="22" rx="2" fill="#0f172a"/>
+                <rect x="52" y="33" width="20" height="22" rx="2" fill="#0f172a"/>
+                <rect x="88" y="33" width="20" height="22" rx="2" fill="#0f172a"/>
+                <rect x="116" y="33" width="20" height="22" rx="2" fill="#0f172a"/>
+                <rect x="18" y="66" width="124" height="6" fill="#fbbf24"/>
+            </svg>`,
+
+            monitor: `<svg viewBox="0 0 140 110" class="w-28 h-20 mx-auto">
+                <rect x="18" y="12" width="104" height="68" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                <rect x="26" y="20" width="88" height="52" rx="4" fill="#0f172a"/>
+                <path d="M45 48 L60 36 L75 50 L95 32" stroke="#22d3ee" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                <path d="M60 80 L54 96 H86 L80 80" fill="#64748b"/>
+                <rect x="44" y="96" width="52" height="6" rx="3" fill="#94a3b8"/>
+            </svg>`,
+
+            printer: `<svg viewBox="0 0 140 110" class="w-28 h-20 mx-auto">
+                <rect x="38" y="14" width="64" height="24" rx="3" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+                <rect x="18" y="36" width="104" height="42" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="3"/>
+                <rect x="36" y="64" width="68" height="34" rx="3" fill="#f8fafc" stroke="#38bdf8" stroke-width="2"/>
+                <line x1="46" y1="74" x2="94" y2="74" stroke="#64748b" stroke-width="2.5"/>
+                <line x1="46" y1="84" x2="82" y2="84" stroke="#64748b" stroke-width="2.5"/>
+            </svg>`,
+
+            speaker: `<svg viewBox="0 0 120 120" class="w-24 h-20 mx-auto">
+                <rect x="28" y="14" width="64" height="92" rx="12" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                <circle cx="60" cy="38" r="11" fill="#0f172a" stroke="#a855f7" stroke-width="3"/>
+                <circle cx="60" cy="76" r="20" fill="#0f172a" stroke="#22d3ee" stroke-width="3.5"/>
+                <circle cx="60" cy="76" r="7" fill="#22d3ee"/>
+            </svg>`,
+
+            ssd: `<svg viewBox="0 0 140 100" class="w-28 h-20 mx-auto">
+                <rect x="22" y="16" width="96" height="68" rx="10" fill="#1e293b" stroke="#22d3ee" stroke-width="3"/>
+                <path d="M45 50 L65 32 L62 48 L88 48 L68 68 L71 50 Z" fill="#a855f7" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="70" y="80" text-anchor="middle" fill="#94a3b8" font-size="10" font-weight="bold">NVMe SSD</text>
+            </svg>`,
+
+            hdd: `<svg viewBox="0 0 140 100" class="w-28 h-20 mx-auto">
+                <rect x="25" y="14" width="90" height="72" rx="8" fill="#334155" stroke="#94a3b8" stroke-width="3"/>
+                <circle cx="70" cy="46" r="22" fill="#0f172a" stroke="#38bdf8" stroke-width="3"/>
+                <circle cx="70" cy="46" r="6" fill="#e2e8f0"/>
+                <path d="M95 72 L75 54" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+            </svg>`,
+
+            flashdisk: `<svg viewBox="0 0 140 100" class="w-28 h-20 mx-auto">
+                <rect x="20" y="34" width="26" height="32" rx="3" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+                <rect x="46" y="28" width="72" height="44" rx="10" fill="#7c3aed" stroke="#38bdf8" stroke-width="3"/>
+                <circle cx="102" cy="50" r="5" fill="#0f172a"/>
+            </svg>`,
+
+            software: `<svg viewBox="0 0 140 110" class="w-28 h-20 mx-auto">
+                <rect x="16" y="16" width="108" height="78" rx="10" fill="#1e293b" stroke="#a855f7" stroke-width="3"/>
+                <rect x="16" y="16" width="108" height="18" rx="8" fill="#7c3aed"/>
+                <circle cx="28" cy="25" r="3" fill="#f43f5e"/><circle cx="38" cy="25" r="3" fill="#fbbf24"/><circle cx="48" cy="25" r="3" fill="#10b981"/>
+                <rect x="30" y="44" width="32" height="32" rx="6" fill="#06b6d4"/>
+                <rect x="74" y="44" width="36" height="12" rx="3" fill="#38bdf8"/>
+                <rect x="74" y="64" width="26" height="12" rx="3" fill="#a855f7"/>
+            </svg>`,
+
+            brainware: `<svg viewBox="0 0 120 120" class="w-24 h-20 mx-auto">
+                <circle cx="60" cy="38" r="18" fill="#38bdf8"/>
+                <path d="M26 102 C26 74, 94 74, 94 102" fill="#7c3aed" stroke="#22d3ee" stroke-width="3"/>
+                <rect x="36" y="72" width="48" height="28" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                <circle cx="60" cy="86" r="4" fill="#22d3ee"/>
+            </svg>`
+        };
+
+        /* =========================================================================
+           4. BANK DATA MATERI LENGKAP (5 SUBBAB + KUIS MINI)
+           ========================================================================= */
+        const MateriData = [
+            {
+                id: 0,
+                badge: 'SUBBAB 1',
+                title: 'Mengenal Sistem Komputer',
+                subtitle: 'Memahami sinergi komponen utama pembentuk komputer',
+                svg: DeviceSVGs.komputerSet,
+                content: `
+                    <div class="space-y-4 text-slate-200 leading-relaxed">
+                        <div class="bg-blue-950/60 border-l-4 border-cyan-400 p-4 rounded-r-xl">
+                            <h4 class="font-display font-bold text-cyan-300 text-lg mb-1">Apa itu Sistem Komputer?</h4>
+                            <p><strong>Sistem Komputer</strong> adalah kumpulan perangkat-perangkat komputer yang saling berhubungan dan berinteraksi satu sama lain untuk menjalankan proses pengolahan data, sehingga dapat menghasilkan informasi yang diharapkan oleh penggunanya.</p>
+                        </div>
+                        <h4 class="font-display font-bold text-purple-300 text-lg">Tiga Pilar Utama Sistem Komputer:</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-cyan-500/30">
+                                <div class="text-cyan-400 font-bold mb-1"><i class="fa-solid fa-microchip mr-1"></i> 1. Hardware</div>
+                                <p class="text-sm text-slate-300">Perangkat keras komputer yang memiliki wujud fisik, dapat dilihat, dan disentuh secara langsung.</p>
+                            </div>
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-purple-500/30">
+                                <div class="text-purple-400 font-bold mb-1"><i class="fa-solid fa-window-maximize mr-1"></i> 2. Software</div>
+                                <p class="text-sm text-slate-300">Perangkat lunak berupa program atau instruksi digital yang mengatur kerja perangkat keras.</p>
+                            </div>
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-amber-500/30">
+                                <div class="text-amber-400 font-bold mb-1"><i class="fa-solid fa-user-astronaut mr-1"></i> 3. Brainware</div>
+                                <p class="text-sm text-slate-300">Manusia yang mengoperasikan, mengendalikan, dan memanfaatkan sistem komputer.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700">
+                            <h5 class="font-bold text-emerald-400 mb-1"><i class="fa-solid fa-link mr-1"></i> Hubungan Ketiga Komponen:</h5>
+                            <p class="text-sm">Ketiganya merupakan satu kesatuan yang <strong>tidak dapat dipisahkan</strong>. Tanpa <em>Software</em>, <em>Hardware</em> hanyalah benda mati. Tanpa <em>Hardware</em>, <em>Software</em> tidak bisa dijalankan. Dan tanpa <em>Brainware</em>, komputer tidak ada yang mengoperasikan.</p>
+                        </div>
+                    </div>
+                `,
+                narration: 'Subbab satu: Mengenal Sistem Komputer. Sistem komputer adalah kumpulan perangkat komputer yang saling terhubung dan bekerja sama untuk mengolah data menjadi informasi. Sistem komputer memiliki tiga komponen utama yang tidak dapat dipisahkan, yaitu Hardware atau perangkat keras, Software atau perangkat lunak, dan Brainware yaitu manusia sebagai pengguna komputer.',
+                quiz: {
+                    question: 'Mengapa Hardware, Software, dan Brainware disebut sebagai satu kesatuan sistem komputer?',
+                    options: [
+                        'Karena harganya selalu dijual dalam satu paket toko',
+                        'Karena ketiganya saling bergantung dan tidak dapat berfungsi jika salah satu tidak ada',
+                        'Karena semuanya terbuat dari logam dan plastik',
+                        'Karena hanya digunakan oleh programmer profesional'
+                    ],
+                    answer: 1,
+                    feedback: 'Tepat sekali! Hardware adalah fisiknya, Software adalah program penggeraknya, dan Brainware adalah manusia yang mengendalikannya.'
+                }
+            },
+            {
+                id: 1,
+                badge: 'SUBBAB 2',
+                title: 'Perangkat Keras (Hardware)',
+                subtitle: 'Mengenal alat input, pemroses, output, dan penyimpanan',
+                svg: DeviceSVGs.cpu,
+                content: `
+                    <div class="space-y-4 text-slate-200">
+                        <p><strong>Hardware (Perangkat Keras)</strong> adalah semua komponen fisik pada komputer yang dapat dilihat dan disentuh. Berdasarkan fungsinya, hardware dibagi menjadi 4 kelompok utama:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- Input -->
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-cyan-500/40">
+                                <h4 class="font-display font-bold text-cyan-300 mb-2"><i class="fa-solid fa-right-to-bracket mr-1"></i> 1. Perangkat Input (Masukan)</h4>
+                                <p class="text-xs text-slate-300 mb-3">Berfungsi memasukkan data atau perintah dari pengguna ke dalam komputer.</p>
+                                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.keyboard}<span class="font-bold text-cyan-200 block mt-1">Keyboard</span><span class="text-[10px] text-slate-400">Ketik huruf/angka</span></div>
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.mouse}<span class="font-bold text-cyan-200 block mt-1">Mouse</span><span class="text-[10px] text-slate-400">Gerakkan kursor</span></div>
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.scanner}<span class="font-bold text-cyan-200 block mt-1">Scanner</span><span class="text-[10px] text-slate-400">Pindai dokumen</span></div>
+                                </div>
+                            </div>
+                            <!-- Process -->
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-purple-500/40">
+                                <h4 class="font-display font-bold text-purple-300 mb-2"><i class="fa-solid fa-gears mr-1"></i> 2. Perangkat Process (Pemroses)</h4>
+                                <p class="text-xs text-slate-300 mb-3">Berfungsi mengolah data yang masuk menjadi informasi.</p>
+                                <div class="grid grid-cols-2 gap-2 text-center text-xs">
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.cpu}<span class="font-bold text-purple-200 block mt-1">CPU (Processor)</span><span class="text-[10px] text-slate-400">Otak pemroses utama</span></div>
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.ram}<span class="font-bold text-purple-200 block mt-1">RAM</span><span class="text-[10px] text-slate-400">Memori kerja sementara</span></div>
+                                </div>
+                            </div>
+                            <!-- Output -->
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-emerald-500/40">
+                                <h4 class="font-display font-bold text-emerald-300 mb-2"><i class="fa-solid fa-desktop mr-1"></i> 3. Perangkat Output (Keluaran)</h4>
+                                <p class="text-xs text-slate-300 mb-3">Menampilkan hasil pengolahan data kepada pengguna.</p>
+                                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.monitor}<span class="font-bold text-emerald-200 block mt-1">Monitor</span><span class="text-[10px] text-slate-400">Tampilan visual</span></div>
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.printer}<span class="font-bold text-emerald-200 block mt-1">Printer</span><span class="text-[10px] text-slate-400">Cetak di kertas</span></div>
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.speaker}<span class="font-bold text-emerald-200 block mt-1">Speaker</span><span class="text-[10px] text-slate-400">Keluaran suara</span></div>
+                                </div>
+                            </div>
+                            <!-- Storage -->
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-amber-500/40">
+                                <h4 class="font-display font-bold text-amber-300 mb-2"><i class="fa-solid fa-hard-drive mr-1"></i> 4. Perangkat Storage (Penyimpanan)</h4>
+                                <p class="text-xs text-slate-300 mb-3">Menyimpan data dan program secara permanen.</p>
+                                <div class="grid grid-cols-3 gap-2 text-center text-xs">
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.ssd}<span class="font-bold text-amber-200 block mt-1">SSD</span><span class="text-[10px] text-slate-400">Penyimpanan super cepat</span></div>
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.hdd}<span class="font-bold text-amber-200 block mt-1">Hard Disk</span><span class="text-[10px] text-slate-400">Piringan magnetik</span></div>
+                                    <div class="bg-slate-900 p-2 rounded-xl">${DeviceSVGs.flashdisk}<span class="font-bold text-amber-200 block mt-1">Flashdisk</span><span class="text-[10px] text-slate-400">Penyimpanan portabel</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                narration: 'Subbab dua: Perangkat Keras atau Hardware. Hardware adalah komponen fisik komputer yang dapat disentuh. Hardware terbagi menjadi empat kelompok: Pertama, perangkat input seperti keyboard, mouse, dan scanner. Kedua, perangkat pemroses yaitu CPU sebagai otak komputer dan RAM sebagai memori sementara. Ketiga, perangkat output seperti monitor, printer, dan speaker. Keempat, perangkat penyimpanan seperti SSD, Hard Disk, dan Flashdisk.',
+                quiz: {
+                    question: 'Manakah kelompok perangkat berikut yang seluruhnya termasuk Perangkat Input?',
+                    options: [
+                        'Monitor, Printer, dan Speaker',
+                        'Keyboard, Mouse, dan Scanner',
+                        'SSD, Hard Disk, dan Flashdisk',
+                        'CPU, RAM, dan Monitor'
+                    ],
+                    answer: 1,
+                    feedback: 'Hebat! Keyboard, Mouse, dan Scanner bertugas memasukkan data ke dalam komputer.'
+                }
+            },
+            {
+                id: 2,
+                badge: 'SUBBAB 3',
+                title: 'Perangkat Lunak (Software)',
+                subtitle: 'Sistem Operasi dan Perangkat Lunak Aplikasi',
+                svg: DeviceSVGs.software,
+                content: `
+                    <div class="space-y-4 text-slate-200">
+                        <div class="bg-purple-950/60 border-l-4 border-purple-400 p-4 rounded-r-xl">
+                            <h4 class="font-display font-bold text-purple-300 text-lg mb-1">Apa itu Software?</h4>
+                            <p><strong>Software (Perangkat Lunak)</strong> adalah sekumpulan data elektronik berupa program atau instruksi yang disimpan dan dijalankan oleh komputer untuk melakukan tugas tertentu. Software tidak memiliki bentuk fisik.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-cyan-500/30">
+                                <h4 class="font-display font-bold text-cyan-300 mb-2"><i class="fa-brands fa-windows mr-1"></i> 1. Sistem Operasi (Operating System)</h4>
+                                <p class="text-sm text-slate-300 mb-2">Software utama yang mengelola seluruh sumber daya hardware dan menjadi jembatan antara pengguna dengan komputer.</p>
+                                <ul class="text-xs space-y-1.5 text-slate-200 bg-slate-900 p-3 rounded-xl">
+                                    <li><span class="text-cyan-400 font-bold">• Windows:</span> Sistem operasi paling populer untuk PC/laptop.</li>
+                                    <li><span class="text-amber-400 font-bold">• Linux:</span> Sistem operasi open-source yang tangguh & gratis.</li>
+                                    <li><span class="text-emerald-400 font-bold">• Android:</span> Sistem operasi utama untuk smartphone & tablet.</li>
+                                    <li><span class="text-purple-400 font-bold">• macOS:</span> Sistem operasi eksklusif komputer Apple Mac.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-slate-800/90 p-4 rounded-2xl border border-purple-500/30">
+                                <h4 class="font-display font-bold text-purple-300 mb-2"><i class="fa-solid fa-cubes mr-1"></i> 2. Software Aplikasi</h4>
+                                <p class="text-sm text-slate-300 mb-2">Program yang dibuat untuk membantu pekerjaan spesifik pengguna di atas sistem operasi.</p>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div class="bg-slate-900 p-2.5 rounded-xl"><strong class="text-blue-400">Pengolah Kata:</strong><br>MS Word, Google Docs</div>
+                                    <div class="bg-slate-900 p-2.5 rounded-xl"><strong class="text-emerald-400">Pengolah Angka:</strong><br>MS Excel, Spreadsheet</div>
+                                    <div class="bg-slate-900 p-2.5 rounded-xl"><strong class="text-amber-400">Peramban Web:</strong><br>Google Chrome, Firefox</div>
+                                    <div class="bg-slate-900 p-2.5 rounded-xl"><strong class="text-rose-400">Desain & Video:</strong><br>Canva, CapCut, GIMP</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                narration: 'Subbab tiga: Perangkat Lunak atau Software. Software adalah program digital yang berisi instruksi untuk menjalankan komputer. Jenis utamanya adalah Sistem Operasi seperti Windows, Linux, Android, dan macOS yang bertugas mengatur seluruh perangkat keras. Selain itu ada Software Aplikasi seperti Microsoft Word, Excel, dan Google Chrome untuk membantu pekerjaan sehari-hari.',
+                quiz: {
+                    question: 'Manakah di bawah ini yang merupakan contoh Sistem Operasi (Operating System)?',
+                    options: [
+                        'Microsoft Word dan Canva',
+                        'Windows, Linux, Android, dan macOS',
+                        'Keyboard dan SSD',
+                        'Google Chrome dan CapCut'
+                    ],
+                    answer: 1,
+                    feedback: 'Benar! Windows, Linux, Android, dan macOS adalah sistem operasi yang mengelola seluruh kerja komputer.'
+                }
+            },
+            {
+                id: 3,
+                badge: 'SUBBAB 4',
+                title: 'Brainware (Pengguna Komputer)',
+                subtitle: 'Peran penting manusia sebagai pengendali teknologi',
+                svg: DeviceSVGs.brainware,
+                content: `
+                    <div class="space-y-4 text-slate-200">
+                        <div class="bg-amber-950/50 border-l-4 border-amber-400 p-4 rounded-r-xl">
+                            <h4 class="font-display font-bold text-amber-300 text-lg mb-1">Siapa itu Brainware?</h4>
+                            <p><strong>Brainware</strong> adalah manusia yang menggunakan, mengoperasikan, merancang, atau memelihara sistem komputer. Secanggih apa pun komputer, tetap membutuhkan akal dan kreativitas manusia.</p>
+                        </div>
+                        <h4 class="font-display font-bold text-cyan-300">Peran & Jenis Brainware di Dunia Digital:</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                            <div class="bg-slate-800/90 p-3.5 rounded-2xl border border-cyan-500/30">
+                                <div class="text-2xl mb-1">👩‍🎓</div>
+                                <h5 class="font-bold text-cyan-300">Operator / User</h5>
+                                <p class="text-xs text-slate-300 mt-1">Pengguna umum seperti siswa dan guru yang mengoperasikan aplikasi komputer.</p>
+                            </div>
+                            <div class="bg-slate-800/90 p-3.5 rounded-2xl border border-purple-500/30">
+                                <div class="text-2xl mb-1">👨‍💻</div>
+                                <h5 class="font-bold text-purple-300">Programmer</h5>
+                                <p class="text-xs text-slate-300 mt-1">Orang yang menulis kode program untuk menciptakan software dan game.</p>
+                            </div>
+                            <div class="bg-slate-800/90 p-3.5 rounded-2xl border border-emerald-500/30">
+                                <div class="text-2xl mb-1">🛠️</div>
+                                <h5 class="font-bold text-emerald-300">Teknisi Komputer</h5>
+                                <p class="text-xs text-slate-300 mt-1">Ahli yang merakit, merawat, dan memperbaiki kerusakan perangkat keras.</p>
+                            </div>
+                            <div class="bg-slate-800/90 p-3.5 rounded-2xl border border-amber-500/30">
+                                <div class="text-2xl mb-1">🛡️</div>
+                                <h5 class="font-bold text-amber-300">Administrator</h5>
+                                <p class="text-xs text-slate-300 mt-1">Pengelola jaringan komputer dan keamanan sistem di sekolah atau kantor.</p>
+                            </div>
+                        </div>
+                    </div>
+                `,
+                narration: 'Subbab empat: Brainware. Brainware adalah manusia yang mengoperasikan dan mengendalikan sistem komputer. Contoh brainware antara lain siswa dan guru sebagai pengguna atau operator, programmer yang membuat aplikasi, teknisi yang memperbaiki komputer, serta administrator jaringan.',
+                quiz: {
+                    question: 'Siswa SMP Negeri 2 Kalianda yang sedang mengetik tugas Informatika menggunakan laptop disebut sebagai...',
+                    options: [
+                        'Hardware',
+                        'Software',
+                        'Brainware',
+                        'Malware'
+                    ],
+                    answer: 2,
+                    feedback: 'Mantap! Manusia yang mengoperasikan komputer disebut Brainware.'
+                }
+            },
+            {
+                id: 4,
+                badge: 'SUBBAB 5',
+                title: 'Cara Kerja Sistem Komputer',
+                subtitle: 'Siklus Pengolahan Data: Input → Process → Output → Storage',
+                svg: DeviceSVGs.ssd,
+                content: `
+                    <div class="space-y-4 text-slate-200">
+                        <p>Bagaimana komputer bekerja saat kita mengetik atau menghitung? Komputer bekerja mengikuti siklus pengolahan data yang disebut <strong>IPOS (Input - Process - Output - Storage)</strong>:</p>
+                        <!-- Diagram Alur Interaktif -->
+                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-center">
+                            <div class="bg-gradient-to-b from-cyan-900/70 to-slate-900 p-4 rounded-2xl border border-cyan-400">
+                                <span class="px-2.5 py-0.5 rounded-full bg-cyan-500 text-slate-950 font-bold text-xs">1. INPUT</span>
+                                <h5 class="font-display font-bold text-white mt-2">Masukan Data</h5>
+                                <p class="text-xs text-slate-300 mt-1">Pengguna memasukkan data/perintah melalui keyboard, mouse, atau mikrofon.</p>
+                            </div>
+                            <div class="bg-gradient-to-b from-purple-900/70 to-slate-900 p-4 rounded-2xl border border-purple-400">
+                                <span class="px-2.5 py-0.5 rounded-full bg-purple-500 text-white font-bold text-xs">2. PROCESS</span>
+                                <h5 class="font-display font-bold text-white mt-2">Pemrosesan</h5>
+                                <p class="text-xs text-slate-300 mt-1">CPU mengolah dan menghitung data dibantu oleh memori sementara (RAM).</p>
+                            </div>
+                            <div class="bg-gradient-to-b from-emerald-900/70 to-slate-900 p-4 rounded-2xl border border-emerald-400">
+                                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 font-bold text-xs">3. OUTPUT</span>
+                                <h5 class="font-display font-bold text-white mt-2">Keluaran Hasil</h5>
+                                <p class="text-xs text-slate-300 mt-1">Informasi hasil olahan ditampilkan di layar monitor, dicetak printer, atau suara speaker.</p>
+                            </div>
+                            <div class="bg-gradient-to-b from-amber-900/70 to-slate-900 p-4 rounded-2xl border border-amber-400">
+                                <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-bold text-xs">4. STORAGE</span>
+                                <h5 class="font-display font-bold text-white mt-2">Penyimpanan</h5>
+                                <p class="text-xs text-slate-300 mt-1">Data disimpan secara permanen ke dalam SSD, Hard Disk, atau Flashdisk.</p>
+                            </div>
+                        </div>
+                        <div class="bg-slate-800/90 p-4 rounded-2xl border border-cyan-500/30 text-sm">
+                            <h5 class="font-bold text-cyan-300 mb-1"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i> Contoh Penerapan Sehari-hari (Kasir Minimarket):</h5>
+                            <p class="text-slate-300">Kasir memindai barcode barang dengan <strong>Scanner (Input)</strong> → Komputer menghitung total harga belanja di <strong>CPU (Process)</strong> → Total harga tampil di layar dan struk dicetak oleh <strong>Monitor & Printer (Output)</strong> → Data transaksi disimpan di <strong>SSD (Storage)</strong>.</p>
+                        </div>
+                    </div>
+                `,
+                narration: 'Subbab lima: Cara Kerja Sistem Komputer. Komputer bekerja melalui empat tahap utama yaitu Input, Process, Output, dan Storage. Contohnya saat kasir memindai barcode belanjaan sebagai input, lalu CPU menghitung total harga sebagai proses, kemudian struk dicetak oleh printer sebagai output, dan data penjualan disimpan ke dalam SSD sebagai storage.',
+                quiz: {
+                    question: 'Urutan siklus cara kerja sistem komputer yang benar adalah...',
+                    options: [
+                        'Output → Input → Storage → Process',
+                        'Input → Process → Output → Storage',
+                        'Storage → Process → Input → Output',
+                        'Process → Output → Input → Storage'
+                    ],
+                    answer: 1,
+                    feedback: 'Luar biasa! Urutan kerja komputer adalah Input (masukan), Process (pemrosesan), Output (keluaran), dan Storage (penyimpanan).'
+                }
+            }
+        ];
+
+        /* =========================================================================
+           5. BANK SOAL EVALUASI AKHIR (15 SOAL SESUAI KOMPOSISI)
+           - Pengertian sistem komputer: 2 soal (0-1)
+           - Hardware dan fungsinya: 5 soal (2-6)
+           - Software dan sistem operasi: 3 soal (7-9)
+           - Brainware: 1 soal (10)
+           - Input, process, output, storage: 4 soal (11-14)
+           ========================================================================= */
+        const EvalQuestions = [
+            // 1-2: Pengertian Sistem Komputer
+            {
+                topic: 'Pengertian Sistem Komputer',
+                q: 'Pengertian sistem komputer yang paling tepat adalah...',
+                opts: [
+                    'Kumpulan kabel listrik yang menghubungkan monitor ke stopkontak',
+                    'Kumpulan perangkat komputer yang saling terhubung dan berinteraksi untuk mengolah data menjadi informasi',
+                    'Perangkat lunak yang digunakan untuk bermain game online saja',
+                    'Mesin ketik elektronik yang tidak membutuhkan pengguna'
+                ],
+                ans: 1,
+                exp: 'Sistem komputer adalah kesatuan komponen (hardware, software, brainware) yang saling berinteraksi mengolah data menjadi informasi.'
+            },
+            {
+                topic: 'Pengertian Sistem Komputer',
+                q: 'Sebuah unit komputer memiliki perangkat keras lengkap dan terpasang Windows 11, tetapi tidak ada manusia yang mengoperasikannya. Komponen sistem komputer yang tidak ada pada kondisi tersebut adalah...',
+                opts: ['Hardware', 'Software', 'Brainware', 'Storage'],
+                ans: 2,
+                exp: 'Brainware adalah manusia yang mengoperasikan komputer.'
+            },
+            // 3-7: Hardware dan Fungsinya
+            {
+                topic: 'Hardware & Fungsinya',
+                q: 'Perangkat keras yang berfungsi sebagai "otak" komputer untuk melakukan perhitungan dan pemrosesan data utama adalah...',
+                opts: ['Monitor', 'CPU (Processor)', 'Flashdisk', 'Scanner'],
+                ans: 1,
+                exp: 'CPU (Central Processing Unit) merupakan otak pemroses utama pada komputer.'
+            },
+            {
+                topic: 'Hardware & Fungsinya',
+                q: 'Perbedaan utama antara RAM dan SSD terletak pada sifat penyimpanannya, yaitu...',
+                opts: [
+                    'RAM menyimpan data sementara saat komputer menyala, sedangkan SSD menyimpan data secara permanen',
+                    'RAM adalah perangkat output, sedangkan SSD adalah perangkat input',
+                    'SSD lebih lambat daripada kaset pita, sedangkan RAM tidak membutuhkan listrik',
+                    'RAM digunakan untuk mencetak dokumen, sedangkan SSD untuk memindai foto'
+                ],
+                ans: 0,
+                exp: 'RAM bersifat volatile (sementara saat proses berjalan), sedangkan SSD bersifat non-volatile (permanen).'
+            },
+            {
+                topic: 'Hardware & Fungsinya',
+                q: 'Dina ingin memindahkan foto-foto tugas sekolah dari komputer laboratorium ke komputer rumahnya dengan alat kecil yang mudah dibawa di saku. Perangkat keras yang paling tepat digunakan Dina adalah...',
+                opts: ['Printer', 'Flashdisk', 'Scanner', 'Speaker'],
+                ans: 1,
+                exp: 'Flashdisk adalah media penyimpanan portabel yang praktis untuk memindahkan data.'
+            },
+            {
+                topic: 'Hardware & Fungsinya',
+                q: 'Perangkat keras yang berfungsi mengubah dokumen fisik di atas kertas menjadi berkas gambar digital di dalam komputer adalah...',
+                opts: ['Printer', 'Monitor', 'Scanner', 'Plotter'],
+                ans: 2,
+                exp: 'Scanner memindai dokumen fisik menjadi file digital (perangkat input).'
+            },
+            {
+                topic: 'Hardware & Fungsinya',
+                q: 'Perangkat keras berikut yang berfungsi mengeluarkan informasi dalam bentuk gelombang bunyi atau suara adalah...',
+                opts: ['Microphone', 'Speaker', 'Keyboard', 'Mouse'],
+                ans: 1,
+                exp: 'Speaker merupakan perangkat output yang menghasilkan keluaran berupa suara.'
+            },
+            // 8-10: Software dan Sistem Operasi
+            {
+                topic: 'Software & Sistem Operasi',
+                q: 'Perangkat lunak utama yang pertama kali dijalankan saat komputer dinyalakan dan bertugas mengatur seluruh kerja perangkat keras adalah...',
+                opts: ['Aplikasi Pengolah Kata', 'Sistem Operasi (Operating System)', 'Aplikasi Desain Grafis', 'Peramban Web'],
+                ans: 1,
+                exp: 'Sistem Operasi mengelola seluruh sumber daya hardware dan menyediakan antarmuka bagi pengguna.'
+            },
+            {
+                topic: 'Software & Sistem Operasi',
+                q: 'Berikut ini yang merupakan pasangan Sistem Operasi dan perangkat yang tepat adalah...',
+                opts: [
+                    'Android digunakan pada sebagian besar smartphone',
+                    'Microsoft Excel digunakan sebagai sistem operasi komputer',
+                    'Windows adalah perangkat keras penyimpanan data',
+                    'Google Chrome adalah otak pemroses komputer'
+                ],
+                ans: 0,
+                exp: 'Android adalah sistem operasi berbasis Linux yang dirancang untuk perangkat mobile seperti smartphone dan tablet.'
+            },
+            {
+                topic: 'Software & Sistem Operasi',
+                q: 'Andi mendapat tugas dari guru Informatika untuk membuat laporan praktikum berisi teks dan tabel. Software aplikasi yang paling tepat digunakan Andi adalah...',
+                opts: ['Windows 11', 'Microsoft Word / Google Docs', 'Speaker', 'Linux Ubuntu'],
+                ans: 1,
+                exp: 'Microsoft Word atau Google Docs adalah software aplikasi pengolah kata.'
+            },
+            // 11: Brainware
+            {
+                topic: 'Brainware',
+                q: 'Seorang ahli yang bertugas merancang algoritma dan menulis baris-baris kode untuk menciptakan aplikasi edukasi disebut...',
+                opts: ['Programmer', 'Hardware Engineer', 'Monitor', 'Scanner'],
+                ans: 0,
+                exp: 'Programmer adalah brainware yang membuat perangkat lunak menggunakan bahasa pemrograman.'
+            },
+            // 12-15: Input, Process, Output, Storage
+            {
+                topic: 'Input, Process, Output, Storage',
+                q: 'Saat siswa menekan tombol huruf "A" pada keyboard, tahap cara kerja sistem komputer yang sedang terjadi adalah...',
+                opts: ['Output', 'Storage', 'Input', 'Printing'],
+                ans: 2,
+                exp: 'Menekan tombol keyboard merupakan proses memasukkan data (Input).'
+            },
+            {
+                topic: 'Input, Process, Output, Storage',
+                q: 'Setelah data diketik melalui keyboard, data dikirim menuju CPU untuk diterjemahkan menjadi karakter huruf. Tahap ini disebut...',
+                opts: ['Input', 'Process', 'Output', 'Storage'],
+                ans: 1,
+                exp: 'Pengolahan data di dalam CPU termasuk tahap Process.'
+            },
+            {
+                topic: 'Input, Process, Output, Storage',
+                q: 'Munculnya tulisan "INFORMATIKA" pada layar monitor sehingga dapat dibaca oleh siswa merupakan tahap...',
+                opts: ['Input', 'Process', 'Output', 'Storage'],
+                ans: 2,
+                exp: 'Menampilkan hasil pengolahan ke layar monitor adalah tahap Output.'
+            },
+            {
+                topic: 'Input, Process, Output, Storage',
+                q: 'Siswa menekan tombol Save (Simpan) agar tugasnya tersimpan di dalam SSD komputer dan dapat dibuka kembali minggu depan. Tahap ini disebut...',
+                opts: ['Storage', 'Input', 'Process', 'Output'],
+                ans: 0,
+                exp: 'Menyimpan hasil kerja ke media penyimpanan permanen (SSD) disebut tahap Storage.'
+            }
+        ];
+
+        /* =========================================================================
+           6. STATE NAVIGASI & ROUTING HALAMAN
+           ========================================================================= */
+        let currentRoute = 'home';
+        let currentMateriIdx = 0;
+
+        function navigateTo(route, param = null) {
+            AudioEngine.playClick();
+            AudioEngine.stopSpeech();
+            currentRoute = route;
+            if (param !== null && route === 'materi') currentMateriIdx = param;
+
+            const homeBtn = document.getElementById('btn-home-nav');
+            if (route === 'home') {
+                homeBtn.classList.add('hidden');
+                setRobotMessage('Halo Sobat Informatika! Pilih salah satu dari 7 menu petualangan di layar untuk mulai belajar Sistem Komputer!');
+            } else {
+                homeBtn.classList.remove('hidden');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            renderCurrentView();
+        }
+
+        function setRobotMessage(msg) {
+            const el = document.getElementById('robot-text');
+            if (el) el.textContent = msg;
+        }
+
+        function speakRobotMessage() {
+            const msg = document.getElementById('robot-text').textContent;
+            AudioEngine.speak(msg);
+        }
+
+        const RobotTips = [
+            'Tahukah kamu? CPU sering disebut sebagai otak dari komputer karena memproses jutaan instruksi setiap detik!',
+            'Ingat siklus IPOS: Input (Masuk), Process (Olah), Output (Keluar), dan Storage (Simpan)!',
+            'SSD jauh lebih cepat dibandingkan Hard Disk biasa karena tidak menggunakan piringan berputar.',
+            'Jangan lupa kerjakan LKPD Digital dan Evaluasi 15 soal untuk mendapatkan medali emas SMPN 2 Kalianda!',
+            'Klik tombol "Dengarkan Materi" jika kamu ingin saya membacakan penjelasan materinya!'
+        ];
+        let tipIdx = 0;
+        function interactWithRobot() {
+            AudioEngine.playCorrect();
+            setRobotMessage(RobotTips[tipIdx % RobotTips.length]);
+            tipIdx++;
+        }
+
+        function renderCurrentView() {
+            const container = document.getElementById('app-container');
+            switch (currentRoute) {
+                case 'home': renderHome(container); break;
+                case 'materi': renderMateri(container); break;
+                case 'simulasi': renderSimulasi(container); break;
+                case 'praktikum': renderPraktikum(container); break;
+                case 'game': renderGameMenu(container); break;
+                case 'lkpd': renderLKPD(container); break;
+                case 'evaluasi': renderEvaluasi(container); break;
+                case 'pengembang': renderPengembang(container); break;
+            }
+        }
+
+        /* =========================================================================
+           7. HALAMAN UTAMA (DASHBOARD)
+           ========================================================================= */
+        function renderHome(container) {
+            const pct = getOverallPercentage();
+            container.innerHTML = `
+                <div class="space-y-6">
+                    <!-- Hero Banner Futuristik -->
+                    <div class="glass-panel rounded-3xl p-6 sm:p-8 relative overflow-hidden border-2 border-cyan-400/40">
+                        <div class="absolute -right-16 -top-16 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+                        <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center relative z-10">
+                            <div class="lg:col-span-8 space-y-3">
+                                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/50 text-cyan-300 text-xs font-bold tracking-wider">
+                                    <i class="fa-solid fa-sparkles"></i> MEDIA PEMBELAJARAN INTERAKTIF • TAHUN PELAJARAN 2026/2027
+                                </div>
+                                <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                                    Selamat Datang di <span class="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Computer Lab Adventure!</span>
+                                </h2>
+                                <p class="text-cyan-200 font-semibold text-base sm:text-lg">
+                                    Jelajahi Dunia Sistem Komputer • Informatika Kelas VII – Fase D
+                                </p>
+                                <div class="bg-slate-900/80 border border-blue-500/40 rounded-2xl p-4">
+                                    <div class="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1">
+                                        <i class="fa-solid fa-bullseye mr-1"></i> Tujuan Pembelajaran:
+                                    </div>
+                                    <p class="text-sm sm:text-base text-slate-200">
+                                        Peserta didik mampu memahami fungsi sistem komputer (perangkat keras dan sistem operasi) yang memungkinkannya untuk menerima <strong>input</strong>, <strong>menyimpan</strong>, <strong>memproses</strong>, dan <strong>menyajikan data</strong>.
+                                    </p>
+                                </div>
+
+                                <!-- Indikator Progres Pembelajaran -->
+                                <div class="pt-2">
+                                    <div class="flex justify-between items-center text-xs sm:text-sm font-bold mb-1.5">
+                                        <span class="text-slate-300"><i class="fa-solid fa-chart-line text-cyan-400 mr-1"></i> Progres Petualangan Belajarmu</span>
+                                        <span class="text-cyan-300">${pct}% Selesai</span>
+                                    </div>
+                                    <div class="w-full h-3.5 bg-slate-900 rounded-full overflow-hidden border border-slate-700 p-0.5">
+                                        <div class="h-full rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 transition-all duration-700" style="width: ${pct}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Ilustrasi Komputer Lab 3D -->
+                            <div class="lg:col-span-4 flex flex-col items-center justify-center">
+                                <div class="w-full max-w-[260px] animate-float">
+                                    ${DeviceSVGs.komputerSet}
+                                </div>
+                                <div class="mt-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-purple-500/40 text-xs font-bold text-purple-300">
+                                    <i class="fa-solid fa-school mr-1"></i> SMP NEGERI 2 KALIANDA
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 7 TOMBOL MENU UTAMA -->
+                    <div>
+                        <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-base"><i class="fa-solid fa-compass"></i></span>
+                            Pilih Zona Petualangan (7 Menu Utama)
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <!-- Menu 1: Materi -->
+                            <button onclick="navigateTo('materi')" class="btn-3d group text-left glass-panel hover:border-cyan-400 rounded-3xl p-5 flex flex-col justify-between transition hover:-translate-y-1">
+                                <div>
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div class="w-13 h-13 p-3 rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 text-white text-2xl shadow-lg">
+                                            <i class="fa-solid fa-book-open-reader"></i>
+                                        </div>
+                                        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300">
+                                            ${userProgress.materiDone.filter(Boolean).length}/5 Bab
+                                        </span>
+                                    </div>
+                                    <h4 class="font-display text-xl font-bold text-white group-hover:text-cyan-300 transition">1. Materi Belajar</h4>
+                                    <p class="text-xs text-slate-300 mt-1">5 Subbab lengkap + ilustrasi, audio narasi & kuis mini.</p>
+                                </div>
+                                <div class="mt-4 text-xs font-bold text-cyan-400 flex items-center gap-1">
+                                    Mulai Belajar <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                                </div>
+                            </button>
+
+                            <!-- Menu 2: Simulasi -->
+                            <button onclick="navigateTo('simulasi')" class="btn-3d group text-left glass-panel hover:border-purple-400 rounded-3xl p-5 flex flex-col justify-between transition hover:-translate-y-1">
+                                <div>
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div class="w-13 h-13 p-3 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-600 text-white text-2xl shadow-lg">
+                                            <i class="fa-solid fa-microchip"></i>
+                                        </div>
+                                        <span class="text-xs font-bold px-2.5 py-1 rounded-full ${userProgress.simulasiDone ? 'bg-emerald-500/20 text-emerald-300' : 'bg-purple-500/20 text-purple-300'}">
+                                            ${userProgress.simulasiDone ? 'Selesai ✓' : 'Lab Virtual'}
+                                        </span>
+                                    </div>
+                                    <h4 class="font-display text-xl font-bold text-white group-hover:text-purple-300 transition">2. Simulasi Lab</h4>
+                                    <p class="text-xs text-slate-300 mt-1">Animasi aliran data Input → Process → Output → Storage.</p>
+                                </div>
+                                <div class="mt-4 text-xs font-bold text-purple-400 flex items-center gap-1">
+                                    Jalankan Simulasi <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                                </div>
+                            </button>
+
+                            <!-- Menu 3: Praktikum -->
+                            <button onclick="navigateTo('praktikum')" class="btn-3d group text-left glass-panel hover:border-emerald-400 rounded-3xl p-5 flex flex-col justify-between transition hover:-translate-y-1">
+                                <div>
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div class="w-13 h-13 p-3 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 text-white text-2xl shadow-lg">
+                                            <i class="fa-solid fa-flask-vial"></i>
+                                        </div>
+                                        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300">
+                                            ${userProgress.praktikumDone.filter(Boolean).length}/4 Kegiatan
+                                        </span>
+                                    </div>
+                                    <h4 class="font-display text-xl font-bold text-white group-hover:text-emerald-300 transition">3. Praktikum Virtual</h4>
+                                    <p class="text-xs text-slate-300 mt-1">4 Aktivitas interaktif klasifikasi & drag-and-drop.</p>
+                                </div>
+                                <div class="mt-4 text-xs font-bold text-emerald-400 flex items-center gap-1">
+                                    Buka Praktikum <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                                </div>
+                            </button>
+
+                            <!-- Menu 4: Game Edukatif -->
+                            <button onclick="navigateTo('game')" class="btn-3d group text-left glass-panel hover:border-amber-400 rounded-3xl p-5 flex flex-col justify-between transition hover:-translate-y-1">
+                                <div>
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div class="w-13 h-13 p-3 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-600 text-white text-2xl shadow-lg">
+                                            <i class="fa-solid fa-gamepad"></i>
+                                        </div>
+                                        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300">
+                                            ${userProgress.gamesDone.filter(Boolean).length}/4 Game
+                                        </span>
+                                    </div>
+                                    <h4 class="font-display text-xl font-bold text-white group-hover:text-amber-300 transition">4. Arena Game</h4>
+                                    <p class="text-xs text-slate-300 mt-1">4 Permainan seru berhadiah bintang & medali lab.</p>
+                                </div>
+                                <div class="mt-4 text-xs font-bold text-amber-400 flex items-center gap-1">
+                                    Main Sekarang <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                                </div>
+                            </button>
+
+                            <!-- Menu 5: LKPD Digital -->
+                            <button onclick="navigateTo('lkpd')" class="btn-3d group text-left glass-panel hover:border-pink-400 rounded-3xl p-5 flex flex-col justify-between transition hover:-translate-y-1">
+                                <div>
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div class="w-13 h-13 p-3 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 text-white text-2xl shadow-lg">
+                                            <i class="fa-solid fa-file-pen"></i>
+                                        </div>
+                                        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-pink-500/20 text-pink-300">
+                                            ${userProgress.lkpdDone ? 'Terkirim ✓' : 'Lembar Kerja'}
+                                        </span>
+                                    </div>
+                                    <h4 class="font-display text-xl font-bold text-white group-hover:text-pink-300 transition">5. LKPD Digital</h4>
+                                    <p class="text-xs text-slate-300 mt-1">Isi lembar kerja langsung, periksa otomatis, cetak & unduh.</p>
+                                </div>
+                                <div class="mt-4 text-xs font-bold text-pink-400 flex items-center gap-1">
+                                    Kerjakan LKPD <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                                </div>
+                            </button>
+
+                            <!-- Menu 6: Evaluasi -->
+                            <button onclick="navigateTo('evaluasi')" class="btn-3d group text-left glass-panel hover:border-blue-400 rounded-3xl p-5 flex flex-col justify-between transition hover:-translate-y-1">
+                                <div>
+                                    <div class="flex justify-between items-start mb-3">
+                                        <div class="w-13 h-13 p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white text-2xl shadow-lg">
+                                            <i class="fa-solid fa-award"></i>
+                                        </div>
+                                        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300">
+                                            ${userProgress.evalScore !== null ? 'Nilai: ' + userProgress.evalScore : '15 Soal'}
+                                        </span>
+                                    </div>
+                                    <h4 class="font-display text-xl font-bold text-white group-hover:text-blue-300 transition">6. Evaluasi Akhir</h4>
+                                    <p class="text-xs text-slate-300 mt-1">Ujian 15 soal pilihan ganda dengan penilaian & pembahasan.</p>
+                                </div>
+                                <div class="mt-4 text-xs font-bold text-blue-400 flex items-center gap-1">
+                                    Mulai Evaluasi <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                                </div>
+                            </button>
+
+                            <!-- Menu 7: Profil Pengembang -->
+                            <button onclick="navigateTo('pengembang')" class="btn-3d group text-left glass-panel hover:border-indigo-400 rounded-3xl p-5 flex flex-col justify-between transition hover:-translate-y-1 sm:col-span-2">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-16 h-16 shrink-0 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-600 to-cyan-500 flex items-center justify-center text-white text-3xl shadow-lg">
+                                        <i class="fa-solid fa-chalkboard-user"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300">Menu 7 • Profil Guru & Pengembang</span>
+                                        <h4 class="font-display text-xl font-bold text-white group-hover:text-indigo-300 transition mt-1">7. Profil Pengembang</h4>
+                                        <p class="text-xs sm:text-sm text-slate-300">Irdyana Listya, S.Kom. • Guru Informatika SMP Negeri 2 Kalianda</p>
+                                    </div>
+                                </div>
+                                <div class="mt-3 text-xs font-bold text-indigo-400 flex items-center justify-end gap-1">
+                                    Lihat Profil Lengkap <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* =========================================================================
+           8. MENU MATERI (5 SUBBAB + NARASI SUARA + KUIS MINI)
+           ========================================================================= */
+        function renderMateri(container) {
+            const bab = MateriData[currentMateriIdx];
+            setRobotMessage(`Kamu sedang membaca ${bab.badge}: ${bab.title}. Klik tombol "Dengarkan Materi" untuk suara narasi!`);
+
+            container.innerHTML = `
+                <div class="space-y-5">
+                    <!-- Tab Navigasi 5 Subbab -->
+                    <div class="flex flex-wrap gap-2">
+                        ${MateriData.map((m, idx) => `
+                            <button onclick="navigateTo('materi', ${idx})" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 ${idx === currentMateriIdx ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg' : 'bg-slate-800/90 text-slate-300 hover:bg-slate-700 border border-slate-700'}">
+                                <span>Bab ${idx + 1}</span>
+                                ${userProgress.materiDone[idx] ? '<i class="fa-solid fa-circle-check text-emerald-300"></i>' : ''}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <!-- Konten Bab Aktif -->
+                    <div class="glass-panel rounded-3xl p-5 sm:p-8 border border-cyan-500/30">
+                        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-700 pb-4 mb-5">
+                            <div>
+                                <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-bold">${bab.badge}</span>
+                                <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mt-1">${bab.title}</h2>
+                                <p class="text-sm text-slate-400">${bab.subtitle}</p>
+                            </div>
+
+                            <!-- Kontrol Audio Narasi Materi -->
+                            <div class="flex flex-wrap items-center gap-2 bg-slate-900/90 p-2.5 rounded-2xl border border-cyan-500/30">
+                                <button onclick="AudioEngine.speak(MateriData[${currentMateriIdx}].narration)" class="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-play"></i> Dengarkan Materi
+                                </button>
+                                <button onclick="AudioEngine.pauseSpeech()" class="px-3 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 font-bold text-xs" title="Jeda Suara">
+                                    <i class="fa-solid fa-pause"></i> Jeda
+                                </button>
+                                <button onclick="AudioEngine.resumeSpeech()" class="px-3 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold text-xs" title="Lanjutkan Suara">
+                                    <i class="fa-solid fa-forward"></i> Lanjut
+                                </button>
+                                <span id="narration-status" class="text-[11px] text-slate-400 px-2">
+                                    <i class="fa-solid fa-headphones mr-1"></i> Siap membacakan
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Ilustrasi Utama Subbab -->
+                        <div class="bg-slate-900/70 rounded-2xl p-4 mb-6 border border-slate-800 flex flex-col items-center">
+                            <div class="animate-float">${bab.svg}</div>
+                            <span class="text-xs text-cyan-300 font-semibold mt-2">Ilustrasi ${bab.title}</span>
+                        </div>
+
+                        <!-- Penjelasan Materi -->
+                        <div class="mb-8">${bab.content}</div>
+
+                        <!-- Kuis Mini Pemahaman -->
+                        <div class="bg-gradient-to-br from-indigo-950/90 to-slate-900 border-2 border-purple-500/40 rounded-2xl p-5">
+                            <h4 class="font-display font-bold text-lg text-purple-300 mb-2">
+                                <i class="fa-solid fa-puzzle-piece mr-1.5 text-amber-400"></i> Kuis Mini Pemahaman (${bab.badge})
+                            </h4>
+                            <p class="text-sm sm:text-base font-semibold text-white mb-3">${bab.quiz.question}</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5" id="mini-quiz-options">
+                                ${bab.quiz.options.map((opt, oIdx) => `
+                                    <button onclick="checkMiniQuiz(${currentMateriIdx}, ${oIdx})" class="text-left p-3 rounded-xl bg-slate-800/90 hover:bg-purple-700/50 border border-slate-600 hover:border-purple-400 text-xs sm:text-sm text-slate-100 transition flex items-center gap-2.5">
+                                        <span class="w-6 h-6 shrink-0 rounded-lg bg-slate-700 flex items-center justify-center font-bold text-cyan-300">${String.fromCharCode(65 + oIdx)}</span>
+                                        <span>${opt}</span>
+                                    </button>
+                                `).join('')}
+                            </div>
+                            <div id="mini-quiz-feedback" class="hidden mt-3 p-3 rounded-xl text-sm font-medium"></div>
+                        </div>
+
+                        <!-- Navigasi Sebelumnya & Selanjutnya -->
+                        <div class="flex justify-between items-center mt-6 pt-4 border-t border-slate-700">
+                            <button onclick="navigateTo('materi', ${currentMateriIdx - 1})" ${currentMateriIdx === 0 ? 'disabled' : ''} class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 ${currentMateriIdx === 0 ? 'bg-slate-800 text-slate-600 cursor-not-allowed' : 'bg-slate-700 hover:bg-slate-600 text-white'}">
+                                <i class="fa-solid fa-chevron-left"></i> Sebelumnya
+                            </button>
+
+                            ${currentMateriIdx < MateriData.length - 1 ? `
+                                <button onclick="navigateTo('materi', ${currentMateriIdx + 1})" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg">
+                                    Bab Selanjutnya <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            ` : `
+                                <button onclick="navigateTo('simulasi')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm flex items-center gap-2 shadow-lg">
+                                    Lanjut ke Simulasi Lab <i class="fa-solid fa-rocket"></i>
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkMiniQuiz(babIdx, selectedIdx) {
+            const quiz = MateriData[babIdx].quiz;
+            const fb = document.getElementById('mini-quiz-feedback');
+            fb.classList.remove('hidden');
+
+            if (selectedIdx === quiz.answer) {
+                AudioEngine.playCorrect();
+                fb.className = 'mt-3 p-3.5 rounded-xl text-sm font-medium bg-emerald-950/90 border border-emerald-400 text-emerald-200';
+                fb.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i> <strong>Benar!</strong> ${quiz.feedback}`;
+                userProgress.materiDone[babIdx] = true;
+                saveProgress();
+                setRobotMessage('Hebat sekali! Jawaban kuis minimu benar dan progres belajarmu bertambah!');
+            } else {
+                AudioEngine.playWrong();
+                fb.className = 'mt-3 p-3.5 rounded-xl text-sm font-medium bg-rose-950/90 border border-rose-400 text-rose-200';
+                fb.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-400 mr-1.5"></i> <strong>Kurang tepat.</strong> Coba baca kembali materi di atas dan pilih jawaban yang benar!`;
+            }
+        }
+
+        /* =========================================================================
+           9. MENU SIMULASI INTERAKTIF: BAGAIMANA KOMPUTER BEKERJA?
+           ========================================================================= */
+        let simState = {
+            step: 0, // 0: idle, 1: keyboard selected, 2: typing, 3: moving to CPU, 4: CPU processing, 5: Monitor Output, 6: Save SSD
+            typedText: '',
+            paused: false,
+            timer: null
+        };
+
+        const SimComponentInfo = {
+            keyboard: {
+                name: 'Keyboard (Perangkat Input)',
+                role: 'INPUT DATA',
+                desc: 'Mengubah ketukan tombol huruf I-N-F-O-R-M-A-T-I-K-A menjadi sinyal biner elektronik untuk dikirim ke CPU.'
+            },
+            cpu: {
+                name: 'CPU & RAM (Perangkat Process)',
+                role: 'PEMROSESAN DATA',
+                desc: 'CPU menerjemahkan kode biner dari keyboard menjadi karakter teks dengan bantuan memori sementara RAM.'
+            },
+            monitor: {
+                name: 'Monitor (Perangkat Output)',
+                role: 'KELUARAN INFORMASI',
+                desc: 'Menampilkan hasil pengolahan CPU dalam bentuk tampilan visual kata "INFORMATIKA" di layar.'
+            },
+            ssd: {
+                name: 'SSD Storage (Perangkat Penyimpanan)',
+                role: 'PENYIMPANAN PERMANEN',
+                desc: 'Menyimpan dokumen "INFORMATIKA.docx" secara permanen agar tetap aman meski komputer dimatikan.'
+            }
+        };
+
+        function renderSimulasi(container) {
+            setRobotMessage('Selamat datang di Lab Simulasi! Pilih Keyboard lalu ketik kata INFORMATIKA untuk melihat aliran data di dalam komputer.');
+            container.innerHTML = `
+                <div class="space-y-5">
+                    <div class="glass-panel rounded-3xl p-5 sm:p-7 border border-purple-500/40">
+                        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700 pb-4 mb-5">
+                            <div>
+                                <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-xs font-bold">SIMULASI INTERAKTIF</span>
+                                <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mt-1">BAGAIMANA KOMPUTER BEKERJA?</h2>
+                                <p class="text-xs sm:text-sm text-slate-300">Operasikan komputer virtual di bawah ini dan amati perjalanan data dari Input hingga Storage!</p>
+                            </div>
+
+                            <!-- Tombol Kontrol Simulasi -->
+                            <div class="flex flex-wrap gap-2">
+                                <button onclick="startAutoSimulasi()" class="px-3.5 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow">
+                                    <i class="fa-solid fa-play"></i> Mulai Otomatis
+                                </button>
+                                <button onclick="togglePauseSimulasi()" id="btn-sim-pause" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow">
+                                    <i class="fa-solid fa-pause"></i> Jeda
+                                </button>
+                                <button onclick="resetSimulasi()" class="px-3.5 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-rotate-right"></i> Ulangi
+                                </button>
+                                <button onclick="speakSimulasiNarration()" class="px-3.5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs flex items-center gap-1.5">
+                                    <i class="fa-solid fa-volume-high"></i> Suara Narasi
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Panel Langkah Interaktif Siswa -->
+                        <div class="bg-slate-900/90 border border-cyan-500/30 rounded-2xl p-4 mb-6">
+                            <div class="flex flex-wrap items-center justify-between gap-3">
+                                <div class="text-xs sm:text-sm font-bold text-cyan-300" id="sim-instruction">
+                                    Langkah 1: Klik perangkat <strong>KEYBOARD</strong> di bawah untuk mengaktifkannya sebagai alat input!
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <input id="sim-input-field" type="text" maxlength="11" placeholder="Ketik: INFORMATIKA" disabled
+                                        oninput="handleSimTyping(this.value)"
+                                        class="px-3 py-1.5 rounded-xl bg-slate-800 border border-cyan-400 text-white font-mono font-bold text-sm uppercase tracking-widest focus:outline-none disabled:opacity-40">
+                                    <button id="sim-btn-save" onclick="triggerSaveSSD()" disabled
+                                        class="px-3.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs disabled:opacity-40 transition">
+                                        <i class="fa-solid fa-floppy-disk mr-1"></i> Simpan ke SSD
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visualisasi Komputer Virtual & Aliran Data -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center relative">
+                            <!-- 1. INPUT: KEYBOARD -->
+                            <div id="node-keyboard" onclick="selectSimKeyboard()" class="cursor-pointer bg-slate-800/90 hover:bg-slate-800 border-2 border-cyan-500/50 rounded-2xl p-4 text-center transition relative">
+                                <span class="px-2.5 py-0.5 rounded-full bg-cyan-500 text-slate-950 font-bold text-[11px]">1. INPUT</span>
+                                <div class="my-2">${DeviceSVGs.keyboard}</div>
+                                <h4 class="font-display font-bold text-white">Keyboard</h4>
+                                <p class="text-[11px] text-cyan-300 mt-1">Klik untuk pilih & ketik</p>
+                                <div id="packet-1" class="hidden mt-2 px-2 py-1 rounded bg-cyan-500/20 border border-cyan-400 text-[11px] font-mono text-cyan-200 animate-pulse">
+                                    Data: <span id="pkt-text-1">...</span>
+                                </div>
+                            </div>
+
+                            <!-- 2. PROCESS: CPU -->
+                            <div id="node-cpu" onclick="inspectSimComponent('cpu')" class="cursor-pointer bg-slate-800/90 hover:bg-slate-800 border-2 border-purple-500/50 rounded-2xl p-4 text-center transition relative">
+                                <span class="px-2.5 py-0.5 rounded-full bg-purple-500 text-white font-bold text-[11px]">2. PROCESS</span>
+                                <div class="my-2" id="cpu-svg-wrap">${DeviceSVGs.cpu}</div>
+                                <h4 class="font-display font-bold text-white">CPU & RAM</h4>
+                                <p class="text-[11px] text-purple-300 mt-1" id="cpu-status-text">Menunggu sinyal input...</p>
+                                <div id="packet-2" class="hidden mt-2 px-2 py-1 rounded bg-purple-500/20 border border-purple-400 text-[11px] font-mono text-purple-200">
+                                    Biner → Teks Digital
+                                </div>
+                            </div>
+
+                            <!-- 3. OUTPUT: MONITOR -->
+                            <div id="node-monitor" onclick="inspectSimComponent('monitor')" class="cursor-pointer bg-slate-800/90 hover:bg-slate-800 border-2 border-emerald-500/50 rounded-2xl p-4 text-center transition relative">
+                                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 font-bold text-[11px]">3. OUTPUT</span>
+                                <div class="my-2 relative">
+                                    ${DeviceSVGs.monitor}
+                                    <div id="monitor-screen-text" class="mt-1 px-2 py-1 rounded bg-slate-950 border border-emerald-400/50 font-mono font-bold text-xs text-emerald-300 min-h-[26px]">
+                                        [ Layar Siap ]
+                                    </div>
+                                </div>
+                                <h4 class="font-display font-bold text-white">Monitor</h4>
+                                <p class="text-[11px] text-emerald-300 mt-1">Menampilkan hasil olahan</p>
+                            </div>
+
+                            <!-- 4. STORAGE: SSD -->
+                            <div id="node-ssd" onclick="inspectSimComponent('ssd')" class="cursor-pointer bg-slate-800/90 hover:bg-slate-800 border-2 border-amber-500/50 rounded-2xl p-4 text-center transition relative">
+                                <span class="px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 font-bold text-[11px]">4. STORAGE</span>
+                                <div class="my-2">${DeviceSVGs.ssd}</div>
+                                <h4 class="font-display font-bold text-white">SSD Storage</h4>
+                                <p class="text-[11px] text-amber-300 mt-1" id="ssd-status-text">Belum ada file disimpan</p>
+                            </div>
+                        </div>
+
+                        <!-- Kotak Detail Komponen Saat Diklik -->
+                        <div id="sim-detail-box" class="mt-6 bg-slate-900/90 border border-slate-700 rounded-2xl p-4 flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            <div>
+                                <h5 id="sim-detail-title" class="font-display font-bold text-cyan-300">Klik Komponen Mana Saja untuk Melihat Penjelasannya</h5>
+                                <p id="sim-detail-desc" class="text-xs sm:text-sm text-slate-300">Setiap perangkat memiliki peran khusus dalam siklus Input, Process, Output, dan Storage.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function inspectSimComponent(key) {
+            AudioEngine.playClick();
+            const info = SimComponentInfo[key];
+            document.getElementById('sim-detail-title').textContent = `${info.name} — [${info.role}]`;
+            document.getElementById('sim-detail-desc').textContent = info.desc;
+        }
+
+        function selectSimKeyboard() {
+            AudioEngine.playCorrect();
+            inspectSimComponent('keyboard');
+            const input = document.getElementById('sim-input-field');
+            input.disabled = false;
+            input.focus();
+            document.getElementById('node-keyboard').classList.add('ring-4', 'ring-cyan-400');
+            document.getElementById('sim-instruction').innerHTML = 'Langkah 2: Sekarang ketik kata <strong class="text-amber-300">INFORMATIKA</strong> pada kotak ketik di samping!';
+        }
+
+        function handleSimTyping(val) {
+            const clean = val.toUpperCase();
+            document.getElementById('sim-input-field').value = clean;
+            if (!clean) return;
+
+            AudioEngine.playTone(750, 'sine', 0.05);
+            // Tampilkan aliran ke Keyboard -> CPU -> Monitor
+            document.getElementById('packet-1').classList.remove('hidden');
+            document.getElementById('pkt-text-1').textContent = clean;
+
+            document.getElementById('node-cpu').classList.add('ring-4', 'ring-purple-500');
+            document.getElementById('cpu-status-text').textContent = 'Memproses biner: ' + clean.length + ' karakter...';
+            document.getElementById('packet-2').classList.remove('hidden');
+
+            document.getElementById('node-monitor').classList.add('ring-4', 'ring-emerald-400');
+            document.getElementById('monitor-screen-text').textContent = clean;
+
+            if (clean === 'INFORMATIKA') {
+                AudioEngine.playCorrect();
+                document.getElementById('sim-btn-save').disabled = false;
+                document.getElementById('sim-instruction').innerHTML = 'Langkah 3: Kata <strong>INFORMATIKA</strong> tampil di Monitor! Klik tombol <strong class="text-amber-300">Simpan ke SSD</strong>!';
+                setRobotMessage('Keren! Data sudah diproses CPU dan tampil di Monitor. Sekarang simpan datanya ke SSD!');
+            }
+        }
+
+        function triggerSaveSSD() {
+            AudioEngine.playVictory();
+            inspectSimComponent('ssd');
+            document.getElementById('node-ssd').classList.add('ring-4', 'ring-amber-400');
+            document.getElementById('ssd-status-text').innerHTML = '<span class="text-emerald-400 font-bold">✓ Tersimpan: INFORMATIKA.docx</span>';
+            document.getElementById('sim-instruction').innerHTML = '<span class="text-emerald-400">🎉 Simulasi Lengkap! Kamu berhasil mempraktikkan siklus Input → Process → Output → Storage!</span>';
+            userProgress.simulasiDone = true;
+            saveProgress();
+            setRobotMessage('Luar biasa! Kamu menyelesaikan simulasi cara kerja komputer dan mendapatkan 2 Bintang!');
+        }
+
+        function startAutoSimulasi() {
+            resetSimulasi();
+            AudioEngine.speak('Simulasi dimulai. Pertama, keyboard dipilih sebagai alat input dan mengetik kata INFORMATIKA. Data mengalir ke CPU untuk diproses, lalu ditampilkan di layar monitor, dan akhirnya disimpan secara permanen di dalam SSD.');
+            selectSimKeyboard();
+            const targetWord = 'INFORMATIKA';
+            let idx = 0;
+            simState.timer = setInterval(() => {
+                if (simState.paused) return;
+                if (idx < targetWord.length) {
+                    const currentStr = targetWord.slice(0, idx + 1);
+                    document.getElementById('sim-input-field').value = currentStr;
+                    handleSimTyping(currentStr);
+                    idx++;
+                } else {
+                    clearInterval(simState.timer);
+                    setTimeout(() => {
+                        if (!simState.paused) triggerSaveSSD();
+                    }, 600);
+                }
+            }, 320);
+        }
+
+        function togglePauseSimulasi() {
+            simState.paused = !simState.paused;
+            const btn = document.getElementById('btn-sim-pause');
+            btn.innerHTML = simState.paused ? '<i class="fa-solid fa-play"></i> Lanjutkan' : '<i class="fa-solid fa-pause"></i> Jeda';
+            if (simState.paused) AudioEngine.pauseSpeech(); else AudioEngine.resumeSpeech();
+        }
+
+        function resetSimulasi() {
+            clearInterval(simState.timer);
+            simState.paused = false;
+            AudioEngine.stopSpeech();
+            renderSimulasi(document.getElementById('app-container'));
+        }
+
+        function speakSimulasiNarration() {
+            AudioEngine.speak('Cara kerja komputer terdiri dari empat tahap. Pertama, perangkat input seperti keyboard memasukkan data ke dalam komputer. Kedua, CPU memproses data tersebut dibantu oleh RAM. Ketiga, monitor menampilkan informasi hasil olahan sebagai output. Keempat, SSD menyimpan file secara permanen.');
+        }
+
+        /* =========================================================================
+           10. MENU PRAKTIKUM VIRTUAL (4 KEGIATAN + DRAG & DROP + NILAI)
+           ========================================================================= */
+        let activePrakTab = 0;
+
+        function renderPraktikum(container) {
+            setRobotMessage('Ayo berlatih di Praktikum Virtual! Selesaikan keempat kegiatan untuk mengasah kemampuanmu.');
+            container.innerHTML = `
+                <div class="space-y-5">
+                    <div class="flex flex-wrap gap-2">
+                        ${['1. Identifikasi Gambar', '2. Kelompokkan Hardware', '3. Hardware vs Software', '4. Urutan Kerja Komputer'].map((label, i) => `
+                            <button onclick="switchPrakTab(${i})" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-1.5 ${activePrakTab === i ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}">
+                                ${label}
+                                ${userProgress.praktikumDone[i] ? '<i class="fa-solid fa-circle-check text-amber-300"></i>' : ''}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <div id="praktikum-stage" class="glass-panel rounded-3xl p-5 sm:p-7 border border-emerald-500/30"></div>
+                </div>
+            `;
+            renderPraktikumContent();
+        }
+
+        function switchPrakTab(idx) {
+            AudioEngine.playClick();
+            activePrakTab = idx;
+            renderPraktikum(document.getElementById('app-container'));
+        }
+
+        function renderPraktikumContent() {
+            const stage = document.getElementById('praktikum-stage');
+            if (activePrakTab === 0) {
+                // Kegiatan 1: Identifikasi Perangkat Berdasarkan Gambar
+                const items = [
+                    { id: 'p1_1', svg: DeviceSVGs.scanner, ans: 'Scanner', opts: ['Printer', 'Scanner', 'Monitor'] },
+                    { id: 'p1_2', svg: DeviceSVGs.ram, ans: 'RAM', opts: ['SSD', 'RAM', 'Flashdisk'] },
+                    { id: 'p1_3', svg: DeviceSVGs.ssd, ans: 'SSD', opts: ['Hard Disk', 'CPU', 'SSD'] },
+                    { id: 'p1_4', svg: DeviceSVGs.speaker, ans: 'Speaker', opts: ['Speaker', 'Mouse', 'Scanner'] }
+                ];
+                stage.innerHTML = `
+                    <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-1">Kegiatan 1: Identifikasi Perangkat Berdasarkan Gambar</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 mb-5">Pilih nama perangkat keras yang tepat untuk setiap gambar di bawah ini!</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        ${items.map((it, idx) => `
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-700 text-center">
+                                <div class="mb-3">${it.svg}</div>
+                                <select id="${it.id}" class="w-full p-2.5 rounded-xl bg-slate-800 border border-cyan-500/40 text-white text-sm font-semibold">
+                                    <option value="">-- Pilih Nama Alat --</option>
+                                    ${it.opts.map(o => `<option value="${o}">${o}</option>`).join('')}
+                                </select>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+                        <button onclick="gradePrak1()" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow">
+                            <i class="fa-solid fa-check-double mr-1"></i> Periksa Jawaban
+                        </button>
+                        <div id="prak1-result" class="text-sm font-bold"></div>
+                    </div>
+                `;
+            } else if (activePrakTab === 1) {
+                // Kegiatan 2: Drag-and-Drop Kelompokkan Hardware (Input, Process, Output, Storage)
+                const hwItems = [
+                    { id: 'hw1', name: 'Keyboard', cat: 'input' },
+                    { id: 'hw2', name: 'CPU', cat: 'process' },
+                    { id: 'hw3', name: 'Monitor', cat: 'output' },
+                    { id: 'hw4', name: 'SSD', cat: 'storage' },
+                    { id: 'hw5', name: 'Mouse', cat: 'input' },
+                    { id: 'hw6', name: 'Printer', cat: 'output' },
+                    { id: 'hw7', name: 'RAM', cat: 'process' },
+                    { id: 'hw8', name: 'Flashdisk', cat: 'storage' }
+                ];
+                stage.innerHTML = `
+                    <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-1">Kegiatan 2: Kelompokkan Hardware (Drag & Drop / Klik)</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 mb-4">Tarik (drag) kartu perangkat ke kotak kategori yang sesuai, atau klik kartu lalu klik kotak tujuan (ramah layar sentuh HP/Tablet)!</p>
+                    
+                    <!-- Bank Kartu -->
+                    <div id="hw-bank" class="flex flex-wrap gap-2 p-3 bg-slate-900/90 rounded-2xl border border-slate-700 mb-5 min-h-[56px]">
+                        ${hwItems.map(h => `
+                            <div id="${h.id}" draggable="true" data-cat="${h.cat}"
+                                ondragstart="dragStart(event)" onclick="selectTouchChip(this)"
+                                class="cursor-grab px-3.5 py-2 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold text-xs sm:text-sm shadow select-none">
+                                ${h.name}
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- 4 Zona Drop -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        ${[
+                            { key: 'input', label: 'INPUT (Masukan)', color: 'border-cyan-400 text-cyan-300' },
+                            { key: 'process', label: 'PROCESS (Pemroses)', color: 'border-purple-400 text-purple-300' },
+                            { key: 'output', label: 'OUTPUT (Keluaran)', color: 'border-emerald-400 text-emerald-300' },
+                            { key: 'storage', label: 'STORAGE (Penyimpanan)', color: 'border-amber-400 text-amber-300' }
+                        ].map(z => `
+                            <div data-zone="${z.key}" ondragover="event.preventDefault()" ondrop="dropToZone(event, this)" onclick="tapToZone(this)"
+                                class="min-h-[140px] bg-slate-900/80 border-2 border-dashed ${z.color} rounded-2xl p-3 flex flex-col gap-2 transition hover:bg-slate-800/80">
+                                <div class="font-display font-bold text-xs text-center pb-1 border-b border-slate-700">${z.label}</div>
+                                <div class="zone-items flex flex-wrap gap-1.5"></div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+                        <div class="flex gap-2">
+                            <button onclick="gradePrak2()" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow">
+                                <i class="fa-solid fa-check-double mr-1"></i> Periksa Jawaban
+                            </button>
+                            <button onclick="renderPraktikumContent()" class="px-4 py-2.5 rounded-xl bg-slate-700 text-white font-bold text-xs">Reset</button>
+                        </div>
+                        <div id="prak2-result" class="text-sm font-bold"></div>
+                    </div>
+                `;
+            } else if (activePrakTab === 2) {
+                // Kegiatan 3: Membedakan Hardware dan Software
+                const mixItems = [
+                    { name: 'Windows 11', type: 'Software' },
+                    { name: 'Motherboard / CPU', type: 'Hardware' },
+                    { name: 'Google Chrome', type: 'Software' },
+                    { name: 'Keyboard Gaming', type: 'Hardware' },
+                    { name: 'Sistem Operasi Linux', type: 'Software' },
+                    { name: 'Hard Disk Drive', type: 'Hardware' }
+                ];
+                stage.innerHTML = `
+                    <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-1">Kegiatan 3: Membedakan Hardware dan Software</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 mb-4">Tentukan apakah setiap item berikut termasuk <strong>Hardware</strong> (Perangkat Keras) atau <strong>Software</strong> (Perangkat Lunak).</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        ${mixItems.map((m, i) => `
+                            <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-slate-700 flex items-center justify-between gap-3">
+                                <span class="font-bold text-sm text-white">${i + 1}. ${m.name}</span>
+                                <div class="flex gap-2">
+                                    <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-slate-800 border border-cyan-500/40 text-xs font-bold flex items-center gap-1">
+                                        <input type="radio" name="p3_${i}" value="Hardware" class="accent-cyan-400"> Hardware
+                                    </label>
+                                    <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-slate-800 border border-purple-500/40 text-xs font-bold flex items-center gap-1">
+                                        <input type="radio" name="p3_${i}" value="Software" class="accent-purple-400"> Software
+                                    </label>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+                        <button onclick="gradePrak3()" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow">
+                            <i class="fa-solid fa-check-double mr-1"></i> Periksa Jawaban
+                        </button>
+                        <div id="prak3-result" class="text-sm font-bold"></div>
+                    </div>
+                `;
+            } else {
+                // Kegiatan 4: Menyusun Urutan Cara Kerja Sistem Komputer
+                stage.innerHTML = `
+                    <h3 class="font-display text-xl sm:text-2xl font-bold text-white mb-1">Kegiatan 4: Menyusun Urutan Cara Kerja Sistem Komputer</h3>
+                    <p class="text-xs sm:text-sm text-slate-300 mb-4">Pilih nomor urutan (1 sampai 4) untuk setiap peristiwa kerja komputer di bawah ini!</p>
+                    <div class="space-y-3">
+                        ${[
+                            { id: 'p4_1', text: 'CPU mengolah angka dan rumus penjumlahan yang dimasukkan pengguna.', correct: '2' },
+                            { id: 'p4_2', text: 'Dokumen tugas disimpan secara permanen ke dalam SSD komputer.', correct: '4' },
+                            { id: 'p4_3', text: 'Siswa mengetik data menggunakan keyboard dan mengklik mouse.', correct: '1' },
+                            { id: 'p4_4', text: 'Hasil perhitungan ditampilkan pada layar monitor dan dicetak printer.', correct: '3' }
+                        ].map(row => `
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <span class="text-sm text-slate-100 font-medium">${row.text}</span>
+                                <select id="${row.id}" class="p-2 rounded-xl bg-slate-800 border border-cyan-400 text-cyan-300 font-bold text-xs shrink-0">
+                                    <option value="">-- Pilih Urutan --</option>
+                                    <option value="1">Urutan ke-1 (Input)</option>
+                                    <option value="2">Urutan ke-2 (Process)</option>
+                                    <option value="3">Urutan ke-3 (Output)</option>
+                                    <option value="4">Urutan ke-4 (Storage)</option>
+                                </select>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+                        <button onclick="gradePrak4()" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm shadow">
+                            <i class="fa-solid fa-check-double mr-1"></i> Periksa Jawaban
+                        </button>
+                        <div id="prak4-result" class="text-sm font-bold"></div>
+                    </div>
+                `;
+            }
+        }
+
+        // Helper Drag-and-Drop & Tap-to-Move (Ramah Mobile & Desktop)
+        let selectedChip = null;
+        function dragStart(ev) {
+            ev.dataTransfer.setData('text/plain', ev.target.id);
+        }
+        function dropToZone(ev, zoneEl) {
+            ev.preventDefault();
+            const id = ev.dataTransfer.getData('text/plain');
+            const chip = document.getElementById(id);
+            if (chip) zoneEl.querySelector('.zone-items').appendChild(chip);
+        }
+        function selectTouchChip(chip) {
+            AudioEngine.playClick();
+            if (selectedChip) selectedChip.classList.remove('ring-4', 'ring-amber-300');
+            selectedChip = chip;
+            chip.classList.add('ring-4', 'ring-amber-300');
+        }
+        function tapToZone(zoneEl) {
+            if (selectedChip) {
+                AudioEngine.playTone(600, 'sine', 0.08);
+                selectedChip.classList.remove('ring-4', 'ring-amber-300');
+                zoneEl.querySelector('.zone-items').appendChild(selectedChip);
+                selectedChip = null;
+            }
+        }
+
+        function gradePrak1() {
+            const ans = { p1_1: 'Scanner', p1_2: 'RAM', p1_3: 'SSD', p1_4: 'Speaker' };
+            let score = 0;
+            Object.keys(ans).forEach(k => { if (document.getElementById(k).value === ans[k]) score += 25; });
+            const res = document.getElementById('prak1-result');
+            if (score === 100) {
+                AudioEngine.playCorrect();
+                userProgress.praktikumDone[0] = true; saveProgress();
+                res.innerHTML = `<span class="text-emerald-400">Nilai: 100/100! Sempurna! Semua perangkat teridentifikasi dengan benar.</span>`;
+            } else {
+                AudioEngine.playWrong();
+                res.innerHTML = `<span class="text-amber-300">Nilai: ${score}/100. Pembahasan: 1. Scanner, 2. RAM, 3. SSD, 4. Speaker. Coba perbaiki ya!</span>`;
+            }
+        }
+
+        function gradePrak2() {
+            const zones = document.querySelectorAll('[data-zone]');
+            let correct = 0;
+            zones.forEach(z => {
+                const expected = z.getAttribute('data-zone');
+                z.querySelectorAll('[data-cat]').forEach(chip => {
+                    if (chip.getAttribute('data-cat') === expected) correct++;
+                });
+            });
+            const score = Math.round((correct / 8) * 100);
+            const res = document.getElementById('prak2-result');
+            if (correct === 8) {
+                AudioEngine.playCorrect();
+                userProgress.praktikumDone[1] = true; saveProgress();
+                res.innerHTML = `<span class="text-emerald-400">Nilai: 100/100! Semua 8 perangkat dikelompokkan dengan tepat!</span>`;
+            } else {
+                AudioEngine.playWrong();
+                res.innerHTML = `<span class="text-amber-300">Nilai: ${score}/100 (${correct}/8 benar). Pembahasan: Input (Keyboard, Mouse), Process (CPU, RAM), Output (Monitor, Printer), Storage (SSD, Flashdisk).</span>`;
+            }
+        }
+
+        function gradePrak3() {
+            const keys = ['Software', 'Hardware', 'Software', 'Hardware', 'Software', 'Hardware'];
+            let correct = 0;
+            keys.forEach((k, i) => {
+                const checked = document.querySelector(`input[name="p3_${i}"]:checked`);
+                if (checked && checked.value === k) correct++;
+            });
+            const score = Math.round((correct / 6) * 100);
+            const res = document.getElementById('prak3-result');
+            if (correct === 6) {
+                AudioEngine.playCorrect();
+                userProgress.praktikumDone[2] = true; saveProgress();
+                res.innerHTML = `<span class="text-emerald-400">Nilai: 100/100! Hebat, kamu bisa membedakan Hardware & Software!</span>`;
+            } else {
+                AudioEngine.playWrong();
+                res.innerHTML = `<span class="text-amber-300">Nilai: ${score}/100. Pembahasan: Windows, Chrome, Linux adalah Software; CPU, Keyboard, Hard Disk adalah Hardware.</span>`;
+            }
+        }
+
+        function gradePrak4() {
+            const ans = { p4_1: '2', p4_2: '4', p4_3: '1', p4_4: '3' };
+            let correct = 0;
+            Object.keys(ans).forEach(k => { if (document.getElementById(k).value === ans[k]) correct++; });
+            const score = correct * 25;
+            const res = document.getElementById('prak4-result');
+            if (correct === 4) {
+                AudioEngine.playCorrect();
+                userProgress.praktikumDone[3] = true; saveProgress();
+                res.innerHTML = `<span class="text-emerald-400">Nilai: 100/100! Urutan siklus IPOS (Input-Process-Output-Storage) tepat!</span>`;
+            } else {
+                AudioEngine.playWrong();
+                res.innerHTML = `<span class="text-amber-300">Nilai: ${score}/100. Pembahasan: 1. Ketik keyboard (Input) → 2. Olah di CPU (Process) → 3. Tampil di monitor (Output) → 4. Simpan ke SSD (Storage).</span>`;
+            }
+        }
+
+        /* =========================================================================
+           11. MENU GAME EDUKATIF (4 PERMAINAN SERU + SKOR + MEDALI)
+           ========================================================================= */
+        let activeGameIdx = null;
+
+        function renderGameMenu(container) {
+            activeGameIdx = null;
+            setRobotMessage('Selamat datang di Arena Game Edukatif! Pilih salah satu dari 4 game seru untuk mengoleksi medali!');
+            const games = [
+                {
+                    title: '1. TEBAK PERANGKAT',
+                    desc: 'Tebak nama perangkat komputer dari ilustrasi gambar dengan cepat!',
+                    icon: 'fa-eye',
+                    grad: 'from-cyan-500 to-blue-600'
+                },
+                {
+                    title: '2. PASANGKAN KOMPONEN',
+                    desc: 'Tarik/pasang setiap perangkat ke kategori fungsi yang benar!',
+                    icon: 'fa-puzzle-piece',
+                    grad: 'from-purple-500 to-indigo-600'
+                },
+                {
+                    title: '3. SUSUN ALUR KOMPUTER',
+                    desc: 'Susun blok Input, Process, Output, dan Storage sesuai skenario!',
+                    icon: 'fa-diagram-project',
+                    grad: 'from-emerald-500 to-teal-600'
+                },
+                {
+                    title: '4. MISI SELAMATKAN KOMPUTER',
+                    desc: 'Selesaikan 10 tantangan darurat untuk mengaktifkan kembali komputer lab!',
+                    icon: 'fa-shield-halved',
+                    grad: 'from-amber-500 to-rose-600'
+                }
+            ];
+
+            container.innerHTML = `
+                <div class="space-y-5">
+                    <div class="glass-panel rounded-3xl p-6 border border-amber-400/40">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-amber-400"></i> Arena Game Edukatif
+                        </h2>
+                        <p class="text-sm text-slate-300 mt-1">Raih skor tertinggi, kumpulkan bintang, dan menangkan Medali Juara Informatika!</p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+                            ${games.map((g, idx) => `
+                                <div class="bg-slate-900/90 border border-slate-700 hover:border-amber-400 rounded-2xl p-5 flex flex-col justify-between transition">
+                                    <div>
+                                        <div class="flex justify-between items-center mb-3">
+                                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br ${g.grad} text-white flex items-center justify-center text-xl shadow">
+                                                <i class="fa-solid ${g.icon}"></i>
+                                            </div>
+                                            ${userProgress.gamesDone[idx] ? '<span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 text-xs font-bold"><i class="fa-solid fa-medal mr-1"></i> Medali Diraih</span>' : '<span class="text-xs text-slate-400">Belum Selesai</span>'}
+                                        </div>
+                                        <h3 class="font-display text-xl font-bold text-white">${g.title}</h3>
+                                        <p class="text-xs sm:text-sm text-slate-300 mt-1">${g.desc}</p>
+                                    </div>
+                                    <button onclick="launchGame(${idx})" class="btn-3d mt-4 w-full py-2.5 rounded-xl bg-gradient-to-r ${g.grad} text-white font-bold text-sm">
+                                        Mainkan Game <i class="fa-solid fa-play ml-1"></i>
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // State Game Aktif
+        let gState = {};
+
+        function launchGame(idx) {
+            AudioEngine.playClick();
+            activeGameIdx = idx;
+            const container = document.getElementById('app-container');
+
+            if (idx === 0) {
+                // GAME 1: TEBAK PERANGKAT (6 Ronde)
+                gState = {
+                    round: 0,
+                    score: 0,
+                    questions: [
+                        { svg: DeviceSVGs.keyboard, ans: 'Keyboard', opts: ['Keyboard', 'Monitor', 'SSD', 'Speaker'] },
+                        { svg: DeviceSVGs.cpu, ans: 'CPU', opts: ['RAM', 'CPU', 'Mouse', 'Scanner'] },
+                        { svg: DeviceSVGs.monitor, ans: 'Monitor', opts: ['Printer', 'Flashdisk', 'Monitor', 'Keyboard'] },
+                        { svg: DeviceSVGs.flashdisk, ans: 'Flashdisk', opts: ['Scanner', 'Flashdisk', 'CPU', 'Speaker'] },
+                        { svg: DeviceSVGs.printer, ans: 'Printer', opts: ['Printer', 'Monitor', 'Mouse', 'RAM'] },
+                        { svg: DeviceSVGs.mouse, ans: 'Mouse', opts: ['SSD', 'Speaker', 'Mouse', 'Keyboard'] }
+                    ]
+                };
+                renderGame1(container);
+            } else if (idx === 1) {
+                // GAME 2: PASANGKAN KOMPONEN
+                gState = {
+                    score: 0,
+                    matched: 0,
+                    pairs: [
+                        { id: 'gp1', label: 'Scanner', svg: DeviceSVGs.scanner, target: 'Input' },
+                        { id: 'gp2', label: 'CPU', svg: DeviceSVGs.cpu, target: 'Process' },
+                        { id: 'gp3', label: 'Printer', svg: DeviceSVGs.printer, target: 'Output' },
+                        { id: 'gp4', label: 'Hard Disk', svg: DeviceSVGs.hdd, target: 'Storage' }
+                    ]
+                };
+                renderGame2(container);
+            } else if (idx === 2) {
+                // GAME 3: SUSUN ALUR KOMPUTER
+                gState = {
+                    stepOrder: [],
+                    targetOrder: ['INPUT', 'PROCESS', 'OUTPUT', 'STORAGE']
+                };
+                renderGame3(container);
+            } else if (idx === 3) {
+                // GAME 4: MISI SELAMATKAN KOMPUTER (10 Tantangan)
+                gState = {
+                    qIdx: 0,
+                    score: 0,
+                    challenges: [
+                        { q: 'Sistem komputer membutuhkan daya kendali utama. Siapakah yang mengoperasikan komputer?', opts: ['Brainware', 'Malware', 'Kabel LAN'], ans: 0 },
+                        { q: 'Komponen fisik komputer yang bisa dilihat dan disentuh disebut...', opts: ['Software', 'Hardware', 'Freeware'], ans: 1 },
+                        { q: 'Untuk mengetik perintah perbaikan sistem, perangkat input yang dipakai adalah...', opts: ['Speaker', 'Keyboard', 'Monitor'], ans: 1 },
+                        { q: 'Otak komputer yang memproses semua instruksi pemulihan adalah...', opts: ['CPU', 'Printer', 'Scanner'], ans: 0 },
+                        { q: 'Memori kerja sementara saat aplikasi berjalan disebut...', opts: ['RAM', 'Flashdisk', 'Mouse'], ans: 0 },
+                        { q: 'Sistem operasi yang mengelola seluruh hardware komputer adalah...', opts: ['Windows / Linux', 'Mousepad', 'Kertas HVS'], ans: 0 },
+                        { q: 'Untuk melihat pesan status perbaikan sistem, kita melihat ke...', opts: ['Scanner', 'Monitor', 'Microphone'], ans: 1 },
+                        { q: 'Media penyimpanan modern super cepat tanpa piringan berputar adalah...', opts: ['SSD', 'Disket', 'Kaset'], ans: 0 },
+                        { q: 'Perangkat yang mengubah dokumen kertas menjadi file digital adalah...', opts: ['Printer', 'Scanner', 'Speaker'], ans: 1 },
+                        { q: 'Tahap akhir menyimpan konfigurasi sistem komputer secara permanen adalah...', opts: ['Input', 'Output', 'Storage'], ans: 2 }
+                    ]
+                };
+                renderGame4(container);
+            }
+        }
+
+        function renderGameVictory(container, gameIdx, title, score, maxScore) {
+            AudioEngine.playVictory();
+            userProgress.gamesDone[gameIdx] = true;
+            saveProgress();
+            setRobotMessage(`Selamat! Kamu memenangkan ${title} dan meraih Medali Emas!`);
+            container.innerHTML = `
+                <div class="glass-panel rounded-3xl p-8 text-center max-w-xl mx-auto border-2 border-amber-400">
+                    <div class="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-amber-300 to-orange-500 flex items-center justify-center text-5xl text-slate-950 shadow-2xl mb-4 animate-bounce">
+                        <i class="fa-solid fa-medal"></i>
+                    </div>
+                    <h2 class="font-display text-3xl font-bold text-amber-300">MISI BERHASIL!</h2>
+                    <p class="text-white font-bold text-lg mt-1">${title}</p>
+                    <div class="my-4 flex justify-center gap-2 text-2xl text-amber-400">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-slate-200 text-base mb-6">Skor Akhir Kamu: <strong class="text-cyan-300 text-2xl">${score} / ${maxScore}</strong></p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button onclick="launchGame(${gameIdx})" class="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm">
+                            <i class="fa-solid fa-rotate-right mr-1"></i> Bermain Kembali
+                        </button>
+                        <button onclick="renderGameMenu(document.getElementById('app-container'))" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm">
+                            <i class="fa-solid fa-grid-2 mr-1"></i> Pilih Game Lain
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- GAME 1 RENDERER ---
+        function renderGame1(container) {
+            if (gState.round >= gState.questions.length) {
+                renderGameVictory(container, 0, 'Game 1: Tebak Perangkat', gState.score, 600);
+                return;
+            }
+            const cur = gState.questions[gState.round];
+            container.innerHTML = `
+                <div class="glass-panel rounded-3xl p-6 max-w-2xl mx-auto border border-cyan-400/50">
+                    <div class="flex justify-between items-center mb-4">
+                        <button onclick="renderGameMenu(document.getElementById('app-container'))" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali</button>
+                        <span class="font-display font-bold text-cyan-300">Ronde ${gState.round + 1}/6</span>
+                        <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 font-bold text-xs">Skor: ${gState.score}</span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-center text-white mb-4">Perangkat Komputer Apakah Ini?</h3>
+                    <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-700 mb-5">${cur.svg}</div>
+                    <div class="grid grid-cols-2 gap-3">
+                        ${cur.opts.map(o => `
+                            <button onclick="answerGame1('${o}')" class="btn-3d p-3.5 rounded-2xl bg-slate-800 hover:bg-cyan-600 border border-cyan-500/40 font-display font-bold text-white text-base transition">
+                                ${o}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        function answerGame1(choice) {
+            const cur = gState.questions[gState.round];
+            if (choice === cur.ans) {
+                AudioEngine.playCorrect();
+                gState.score += 100;
+            } else {
+                AudioEngine.playWrong();
+            }
+            gState.round++;
+            renderGame1(document.getElementById('app-container'));
+        }
+
+        // --- GAME 2 RENDERER ---
+        function renderGame2(container) {
+            if (gState.matched >= 4) {
+                renderGameVictory(container, 1, 'Game 2: Pasangkan Komponen', gState.score, 400);
+                return;
+            }
+            container.innerHTML = `
+                <div class="glass-panel rounded-3xl p-6 max-w-3xl mx-auto border border-purple-400/50">
+                    <div class="flex justify-between items-center mb-4">
+                        <button onclick="renderGameMenu(document.getElementById('app-container'))" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali</button>
+                        <h3 class="font-display text-xl font-bold text-white">Pasangkan Gambar ke Kategori!</h3>
+                        <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 font-bold text-xs">Skor: ${gState.score}</span>
+                    </div>
+                    <p class="text-xs text-center text-slate-300 mb-4">Klik kartu gambar di atas, lalu klik kotak kategori yang sesuai di bawah!</p>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                        ${gState.pairs.map(p => `
+                            <div id="${p.id}" data-target="${p.target}" onclick="selectG2Card(this)"
+                                class="cursor-pointer bg-slate-900 p-3 rounded-2xl border-2 border-cyan-500/40 text-center transition ${p.done ? 'opacity-30 pointer-events-none' : 'hover:scale-105'}">
+                                ${p.svg}
+                                <div class="font-bold text-xs text-white mt-1">${p.label}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        ${['Input', 'Process', 'Output', 'Storage'].map(cat => `
+                            <button onclick="dropG2Target('${cat}')" class="p-5 rounded-2xl bg-gradient-to-b from-purple-900/80 to-slate-900 border-2 border-dashed border-purple-400 hover:bg-purple-800/60 font-display font-bold text-white text-sm">
+                                Kategori:<br><span class="text-cyan-300 text-lg">${cat}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        let selectedG2 = null;
+        function selectG2Card(el) {
+            AudioEngine.playClick();
+            document.querySelectorAll('[data-target]').forEach(c => c.classList.remove('ring-4', 'ring-amber-400'));
+            selectedG2 = el;
+            el.classList.add('ring-4', 'ring-amber-400');
+        }
+        function dropG2Target(cat) {
+            if (!selectedG2) return;
+            if (selectedG2.getAttribute('data-target') === cat) {
+                AudioEngine.playCorrect();
+                gState.score += 100;
+                gState.matched++;
+                const pObj = gState.pairs.find(x => x.id === selectedG2.id);
+                if (pObj) pObj.done = true;
+                selectedG2 = null;
+                renderGame2(document.getElementById('app-container'));
+            } else {
+                AudioEngine.playWrong();
+                selectedG2.classList.remove('ring-4', 'ring-amber-400');
+                selectedG2 = null;
+            }
+        }
+
+        // --- GAME 3 RENDERER ---
+        function renderGame3(container) {
+            const blocks = [
+                { key: 'OUTPUT', label: 'OUTPUT (Monitor)', color: 'from-emerald-500 to-teal-600' },
+                { key: 'STORAGE', label: 'STORAGE (SSD)', color: 'from-amber-500 to-orange-600' },
+                { key: 'INPUT', label: 'INPUT (Keyboard)', color: 'from-cyan-500 to-blue-600' },
+                { key: 'PROCESS', label: 'PROCESS (CPU)', color: 'from-purple-500 to-indigo-600' }
+            ];
+            container.innerHTML = `
+                <div class="glass-panel rounded-3xl p-6 max-w-2xl mx-auto border border-emerald-400/50 text-center">
+                    <div class="flex justify-between items-center mb-4">
+                        <button onclick="renderGameMenu(document.getElementById('app-container'))" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali</button>
+                        <span class="text-xs font-bold text-emerald-300">Susun Alur Kerja Komputer</span>
+                        <button onclick="launchGame(2)" class="text-xs text-amber-300 underline">Reset</button>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-white mb-2">Klik Blok Secara Berurutan dari Langkah 1 hingga 4!</h3>
+                    <p class="text-xs text-slate-300 mb-5">Urutan yang sudah kamu susun:</p>
+
+                    <div class="grid grid-cols-4 gap-2 mb-6 min-h-[60px] bg-slate-950/90 p-3 rounded-2xl border border-slate-700">
+                        ${[0, 1, 2, 3].map(i => `
+                            <div class="rounded-xl border border-dashed border-cyan-500/40 flex items-center justify-center p-2 font-display font-bold text-xs ${gState.stepOrder[i] ? 'bg-cyan-500/20 text-cyan-300' : 'text-slate-600'}">
+                                ${gState.stepOrder[i] ? `${i + 1}. ${gState.stepOrder[i]}` : `Slot ${i + 1}`}
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        ${blocks.map(b => `
+                            <button onclick="pickG3Block('${b.key}')" ${gState.stepOrder.includes(b.key) ? 'disabled' : ''}
+                                class="btn-3d p-4 rounded-2xl bg-gradient-to-r ${b.color} text-white font-display font-bold text-sm disabled:opacity-30">
+                                ${b.label}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        function pickG3Block(key) {
+            const expected = gState.targetOrder[gState.stepOrder.length];
+            if (key === expected) {
+                AudioEngine.playCorrect();
+                gState.stepOrder.push(key);
+                if (gState.stepOrder.length === 4) {
+                    renderGameVictory(document.getElementById('app-container'), 2, 'Game 3: Susun Alur Komputer', 400, 400);
+                } else {
+                    renderGame3(document.getElementById('app-container'));
+                }
+            } else {
+                AudioEngine.playWrong();
+                showToast(`Salah urutan! Langkah ke-${gState.stepOrder.length + 1} seharusnya ${expected}.`);
+            }
+        }
+
+        // --- GAME 4 RENDERER (MISI SELAMATKAN KOMPUTER - 10 TANTANGAN) ---
+        function renderGame4(container) {
+            if (gState.qIdx >= 10) {
+                renderGameVictory(container, 3, 'Game 4: Misi Selamatkan Komputer', gState.score, 1000);
+                return;
+            }
+            const cur = gState.challenges[gState.qIdx];
+            const powerPct = gState.qIdx * 10;
+            container.innerHTML = `
+                <div class="glass-panel rounded-3xl p-6 max-w-2xl mx-auto border-2 border-rose-500/50">
+                    <div class="flex justify-between items-center mb-3">
+                        <button onclick="renderGameMenu(document.getElementById('app-container'))" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-arrow-left mr-1"></i> Kembali</button>
+                        <span class="px-3 py-1 rounded-full bg-rose-500/20 text-rose-300 font-bold text-xs">Tantangan ${gState.qIdx + 1} / 10</span>
+                        <span class="font-bold text-amber-300 text-xs">Skor: ${gState.score}</span>
+                    </div>
+
+                    <!-- Bar Daya Komputer Virtual -->
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-cyan-300"><i class="fa-solid fa-bolt mr-1"></i> Daya Aktivasi Komputer Lab</span>
+                            <span class="text-emerald-400">${powerPct}%</span>
+                        </div>
+                        <div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-rose-500 via-amber-400 to-emerald-400 transition-all" style="width: ${powerPct}%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-700 mb-4">
+                        <p class="font-bold text-white text-base">${cur.q}</p>
+                    </div>
+
+                    <div class="space-y-2.5">
+                        ${cur.opts.map((o, idx) => `
+                            <button onclick="answerGame4(${idx})" class="w-full text-left p-3.5 rounded-xl bg-slate-800 hover:bg-blue-600 border border-slate-600 text-white font-semibold text-sm transition">
+                                ${String.fromCharCode(65 + idx)}. ${o}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        function answerGame4(idx) {
+            const cur = gState.challenges[gState.qIdx];
+            if (idx === cur.ans) {
+                AudioEngine.playCorrect();
+                gState.score += 100;
+                gState.qIdx++;
+                renderGame4(document.getElementById('app-container'));
+            } else {
+                AudioEngine.playWrong();
+                showToast('Sistem gagal merespons! Coba pilih jawaban yang tepat untuk memulihkan daya.');
+            }
+        }
+
+        /* =========================================================================
+           12. MENU LKPD DIGITAL (LENGKAP + PERIKSA + CETAK + UNDUH)
+           ========================================================================= */
+        function renderLKPD(container) {
+            setRobotMessage('Isi LKPD Digital dengan teliti. Kamu bisa memeriksa isian, mencetak, atau mengunduh hasil kerjamu!');
+            container.innerHTML = `
+                <div id="lkpd-printable" class="glass-panel rounded-3xl p-5 sm:p-8 border border-pink-500/40 space-y-6">
+                    <!-- Kop LKPD -->
+                    <div class="border-b-2 border-cyan-500/40 pb-4 flex flex-wrap justify-between items-center gap-4">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-pink-500/20 text-pink-300 text-xs font-bold">LEMBAR KERJA PESERTA DIDIK (LKPD) DIGITAL</span>
+                            <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mt-1">SISTEM KOMPUTER — INFORMATIKA KELAS VII</h2>
+                            <p class="text-xs sm:text-sm text-cyan-300">SMP Negeri 2 Kalianda • Fase D • Tahun Pelajaran 2026/2027</p>
+                        </div>
+                        <div class="no-print flex flex-wrap gap-2">
+                            <button onclick="checkLKPD()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow">
+                                <i class="fa-solid fa-check-circle"></i> Periksa LKPD
+                            </button>
+                            <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs flex items-center gap-1.5 shadow">
+                                <i class="fa-solid fa-print"></i> Cetak
+                            </button>
+                            <button onclick="downloadLKPD()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs flex items-center gap-1.5 shadow">
+                                <i class="fa-solid fa-download"></i> Unduh Hasil
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Identitas Siswa -->
+                    <div class="bg-slate-900/80 p-4 rounded-2xl border border-slate-700 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-cyan-300 mb-1">Nama Lengkap Siswa *</label>
+                            <input id="lkpd-nama" type="text" placeholder="Contoh: Ahmad Fauzi" class="w-full p-2.5 rounded-xl bg-slate-800 border border-slate-600 text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-cyan-300 mb-1">Kelas *</label>
+                            <input id="lkpd-kelas" type="text" placeholder="Contoh: VII A" class="w-full p-2.5 rounded-xl bg-slate-800 border border-slate-600 text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-cyan-300 mb-1">Nomor Absen *</label>
+                            <input id="lkpd-absen" type="number" placeholder="Contoh: 12" class="w-full p-2.5 rounded-xl bg-slate-800 border border-slate-600 text-white text-sm">
+                        </div>
+                    </div>
+
+                    <!-- Tujuan & Petunjuk -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs sm:text-sm">
+                        <div class="bg-blue-950/50 p-4 rounded-2xl border border-blue-500/30">
+                            <h4 class="font-bold text-cyan-300 mb-1"><i class="fa-solid fa-bullseye mr-1"></i> Tujuan Pembelajaran:</h4>
+                            <p class="text-slate-200">Peserta didik mampu memahami fungsi sistem komputer (perangkat keras dan sistem operasi) untuk menerima input, menyimpan, memproses, dan menyajikan data.</p>
+                        </div>
+                        <div class="bg-purple-950/50 p-4 rounded-2xl border border-purple-500/30">
+                            <h4 class="font-bold text-purple-300 mb-1"><i class="fa-solid fa-list-check mr-1"></i> Petunjuk Pengerjaan:</h4>
+                            <p class="text-slate-200">1. Isi identitas diri dengan lengkap. 2. Amati perangkat komputer di laboratorium/simulasi. 3. Lengkapi tabel dan pertanyaan di bawah ini, lalu klik <strong>Periksa LKPD</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Kegiatan 1: Pengamatan Perangkat Komputer -->
+                    <div class="space-y-2">
+                        <h4 class="font-display font-bold text-lg text-cyan-300">A. Kegiatan Pengamatan Perangkat Komputer</h4>
+                        <p class="text-xs text-slate-300">Sebutkan 3 perangkat keras yang kamu amati di laboratorium komputer beserta kegunaannya:</p>
+                        <textarea id="lkpd-pengamatan" rows="3" placeholder="Tuliskan hasil pengamatanmu di sini..." class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm"></textarea>
+                    </div>
+
+                    <!-- Kegiatan 2: Tabel Klasifikasi Hardware -->
+                    <div class="space-y-2">
+                        <h4 class="font-display font-bold text-lg text-cyan-300">B. Tabel Klasifikasi Hardware</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                                <thead>
+                                    <tr class="bg-slate-800 text-cyan-300">
+                                        <th class="p-3 border border-slate-700">No</th>
+                                        <th class="p-3 border border-slate-700">Nama Perangkat</th>
+                                        <th class="p-3 border border-slate-700">Kategori (Input / Process / Output / Storage)</th>
+                                        <th class="p-3 border border-slate-700">Fungsi Utama</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${[
+                                        { nama: 'Keyboard', ans: 'Input' },
+                                        { nama: 'CPU (Processor)', ans: 'Process' },
+                                        { nama: 'Monitor', ans: 'Output' },
+                                        { nama: 'SSD', ans: 'Storage' }
+                                    ].map((row, idx) => `
+                                        <tr class="bg-slate-900/80">
+                                            <td class="p-2.5 border border-slate-700 text-center">${idx + 1}</td>
+                                            <td class="p-2.5 border border-slate-700 font-bold text-white">${row.nama}</td>
+                                            <td class="p-2.5 border border-slate-700">
+                                                <select id="lkpd-cat-${idx}" class="w-full p-2 rounded-lg bg-slate-800 border border-slate-600 text-white text-xs">
+                                                    <option value="">-- Pilih Kategori --</option>
+                                                    <option value="Input">Input</option>
+                                                    <option value="Process">Process</option>
+                                                    <option value="Output">Output</option>
+                                                    <option value="Storage">Storage</option>
+                                                </select>
+                                            </td>
+                                            <td class="p-2.5 border border-slate-700">
+                                                <input id="lkpd-fn-${idx}" type="text" placeholder="Tuliskan fungsinya..." class="w-full p-2 rounded-lg bg-slate-800 border border-slate-600 text-white text-xs">
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Kegiatan 3: Menyusun Alur Kerja Komputer -->
+                    <div class="space-y-2">
+                        <h4 class="font-display font-bold text-lg text-cyan-300">C. Kegiatan Menyusun Alur Kerja Komputer</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            ${[1, 2, 3, 4].map(n => `
+                                <div>
+                                    <label class="text-xs text-slate-300 block mb-1">Tahap ke-${n}:</label>
+                                    <select id="lkpd-flow-${n}" class="w-full p-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-bold">
+                                        <option value="">-- Pilih --</option>
+                                        <option value="Input">Input</option>
+                                        <option value="Process">Process</option>
+                                        <option value="Output">Output</option>
+                                        <option value="Storage">Storage</option>
+                                    </select>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Kegiatan 4: Pertanyaan Pemahaman, Kesimpulan & Refleksi -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="font-bold text-xs sm:text-sm text-cyan-300 block mb-1">D. Pertanyaan Pemahaman: Mengapa sistem operasi penting bagi komputer?</label>
+                            <textarea id="lkpd-tanya" rows="3" placeholder="Jawabanmu..." class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs"></textarea>
+                        </div>
+                        <div>
+                            <label class="font-bold text-xs sm:text-sm text-emerald-300 block mb-1">E. Kesimpulan Pembelajaran:</label>
+                            <textarea id="lkpd-kesimpulan" rows="3" placeholder="Tuliskan kesimpulanmu..." class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs"></textarea>
+                        </div>
+                        <div>
+                            <label class="font-bold text-xs sm:text-sm text-amber-300 block mb-1">F. Refleksi: Bagaimana perasaanmu belajar hari ini?</label>
+                            <textarea id="lkpd-refleksi" rows="3" placeholder="Tuliskan refleksimu..." class="w-full p-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs"></textarea>
+                        </div>
+                    </div>
+
+                    <div id="lkpd-feedback" class="hidden p-4 rounded-2xl text-sm font-medium"></div>
+                </div>
+            `;
+        }
+
+        function checkLKPD() {
+            const nama = document.getElementById('lkpd-nama').value.trim();
+            const kelas = document.getElementById('lkpd-kelas').value.trim();
+            const fb = document.getElementById('lkpd-feedback');
+            fb.classList.remove('hidden');
+
+            if (!nama || !kelas) {
+                AudioEngine.playWrong();
+                fb.className = 'p-4 rounded-2xl text-sm font-medium bg-rose-950/90 border border-rose-400 text-rose-200';
+                fb.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-1"></i> Harap isi <strong>Nama Lengkap</strong> dan <strong>Kelas</strong> terlebih dahulu!';
+                return;
+            }
+
+            // Periksa tabel klasifikasi & alur
+            const expectedCats = ['Input', 'Process', 'Output', 'Storage'];
+            let catCorrect = 0;
+            expectedCats.forEach((c, i) => {
+                if (document.getElementById(`lkpd-cat-${i}`).value === c) catCorrect++;
+            });
+
+            let flowCorrect = 0;
+            expectedCats.forEach((c, i) => {
+                if (document.getElementById(`lkpd-flow-${i + 1}`).value === c) flowCorrect++;
+            });
+
+            const autoScore = Math.round(((catCorrect + flowCorrect) / 8) * 100);
+            AudioEngine.playCorrect();
+            userProgress.lkpdDone = true;
+            saveProgress();
+
+            fb.className = 'p-4 rounded-2xl text-sm font-medium bg-emerald-950/90 border border-emerald-400 text-emerald-200';
+            fb.innerHTML = `
+                <div class="font-bold text-base mb-1"><i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> LKPD Digital Berhasil Diperiksa!</div>
+                <p>Siswa: <strong>${nama}</strong> (${kelas}) • Ketepatan Klasifikasi & Alur Otomatis: <strong>${autoScore}%</strong> (${catCorrect + flowCorrect}/8 tepat). Silakan klik tombol <strong>Cetak</strong> atau <strong>Unduh Hasil</strong> untuk dikumpulkan kepada Ibu Irdyana Listya, S.Kom.</p>
+            `;
+            setRobotMessage('Mantap! LKPD Digitalmu sudah diperiksa dan tersimpan di progres belajar.');
+        }
+
+        function downloadLKPD() {
+            const nama = document.getElementById('lkpd-nama').value.trim() || 'Siswa_SMPN2_Kalianda';
+            const kelas = document.getElementById('lkpd-kelas').value.trim() || 'VII';
+            const absen = document.getElementById('lkpd-absen').value.trim() || '-';
+            const pengamatan = document.getElementById('lkpd-pengamatan').value;
+            const tanya = document.getElementById('lkpd-tanya').value;
+            const kesimpulan = document.getElementById('lkpd-kesimpulan').value;
+            const refleksi = document.getElementById('lkpd-refleksi').value;
+
+            const content = `============================================================
+HASIL LKPD DIGITAL - COMPUTER LAB ADVENTURE
+Mata Pelajaran : Informatika Kelas VII (Fase D)
+Sekolah        : SMP Negeri 2 Kalianda
+Guru Pengampu  : Irdyana Listya, S.Kom.
+============================================================
+Nama Siswa     : ${nama}
+Kelas / Absen  : ${kelas} / ${absen}
+
+A. PENGAMATAN PERANGKAT KOMPUTER:
+${pengamatan}
+
+B. KLASIFIKASI HARDWARE:
+1. Keyboard : ${document.getElementById('lkpd-cat-0').value} - ${document.getElementById('lkpd-fn-0').value}
+2. CPU      : ${document.getElementById('lkpd-cat-1').value} - ${document.getElementById('lkpd-fn-1').value}
+3. Monitor  : ${document.getElementById('lkpd-cat-2').value} - ${document.getElementById('lkpd-fn-2').value}
+4. SSD      : ${document.getElementById('lkpd-cat-3').value} - ${document.getElementById('lkpd-fn-3').value}
+
+C. ALUR KERJA KOMPUTER:
+1. ${document.getElementById('lkpd-flow-1').value} -> 2. ${document.getElementById('lkpd-flow-2').value} -> 3. ${document.getElementById('lkpd-flow-3').value} -> 4. ${document.getElementById('lkpd-flow-4').value}
+
+D. PERTANYAAN PEMAHAMAN:
+${tanya}
+
+E. KESIMPULAN:
+${kesimpulan}
+
+F. REFLEKSI PEMBELAJARAN:
+${refleksi}
+============================================================`;
+
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `LKPD_Informatika_${nama.replace(/\s+/g, '_')}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            AudioEngine.playCorrect();
+        }
+
+        /* =========================================================================
+           13. MENU EVALUASI (15 SOAL PILIHAN GANDA + 1 SOAL PER HALAMAN + PEMBAHASAN)
+           ========================================================================= */
+        let evalState = {
+            started: false,
+            studentName: '',
+            studentClass: '',
+            currentIdx: 0,
+            answers: new Array(15).fill(null),
+            finished: false
+        };
+
+        function renderEvaluasi(container) {
+            if (!evalState.started) {
+                setRobotMessage('Siap menghadapi Evaluasi Akhir? Masukkan Nama dan Kelasmu untuk memulai 15 soal!');
+                container.innerHTML = `
+                    <div class="glass-panel rounded-3xl p-6 sm:p-8 max-w-xl mx-auto border-2 border-blue-500/40">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-400 text-white flex items-center justify-center text-3xl shadow-lg mb-3">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">Evaluasi Akhir Pembelajaran</h2>
+                            <p class="text-xs sm:text-sm text-slate-300 mt-1">15 Soal Pilihan Ganda • Sistem Komputer Kelas VII Fase D</p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-cyan-300 mb-1">Nama Lengkap Peserta Didik *</label>
+                                <input id="eval-name" type="text" value="${evalState.studentName}" placeholder="Masukkan nama lengkapmu..." class="w-full p-3 rounded-xl bg-slate-900 border border-slate-600 text-white text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-cyan-300 mb-1">Kelas *</label>
+                                <select id="eval-class" class="w-full p-3 rounded-xl bg-slate-900 border border-slate-600 text-white text-sm">
+                                    <option value="">-- Pilih Kelas VII --</option>
+                                    <option value="VII A">VII A</option>
+                                    <option value="VII B">VII B</option>
+                                    <option value="VII C">VII C</option>
+                                    <option value="VII D">VII D</option>
+                                    <option value="VII E">VII E</option>
+                                    <option value="VII F">VII F</option>
+                                    <option value="VII G">VII G</option>
+                                    <option value="VII H">VII H</option>
+                                </select>
+                            </div>
+                            <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-700 text-xs text-slate-300 space-y-1">
+                                <div class="font-bold text-amber-300"><i class="fa-solid fa-circle-info mr-1"></i> Ketentuan Evaluasi:</div>
+                                <p>• Terdiri dari 15 soal pilihan ganda (A, B, C, D).</p>
+                                <p>• Wajib memilih jawaban sebelum melanjutkan ke soal berikutnya.</p>
+                                <p>• Rumus Nilai Akhir = (Jumlah Benar ÷ 15) × 100.</p>
+                            </div>
+                            <button onclick="startEvaluasi()" class="btn-3d w-full py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-display font-bold text-base shadow-lg">
+                                Mulai Evaluasi Sekarang <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            if (evalState.finished) {
+                renderEvaluasiResult(container);
+                return;
+            }
+
+            // Tampilkan 1 soal dalam 1 halaman
+            const qObj = EvalQuestions[evalState.currentIdx];
+            const selected = evalState.answers[evalState.currentIdx];
+
+            container.innerHTML = `
+                <div class="glass-panel rounded-3xl p-5 sm:p-8 max-w-3xl mx-auto border border-cyan-500/40">
+                    <!-- Header Nomor Soal & Indikator -->
+                    <div class="flex flex-wrap justify-between items-center gap-2 border-b border-slate-700 pb-4 mb-5">
+                        <div>
+                            <span class="text-xs font-bold text-cyan-300">${evalState.studentName} (${evalState.studentClass})</span>
+                            <div class="text-[11px] text-purple-300 font-semibold">Topik: ${qObj.topic}</div>
+                        </div>
+                        <span class="px-3.5 py-1.5 rounded-full bg-blue-600/30 border border-blue-400 text-white font-display font-bold text-xs">
+                            Soal Nomor ${evalState.currentIdx + 1} dari 15
+                        </span>
+                    </div>
+
+                    <!-- Indikator Nomor 1-15 -->
+                    <div class="flex flex-wrap gap-1.5 mb-6">
+                        ${EvalQuestions.map((_, i) => `
+                            <span class="w-7 h-7 rounded-lg text-xs font-bold flex items-center justify-center ${i === evalState.currentIdx ? 'bg-cyan-400 text-slate-950 ring-2 ring-white' : (evalState.answers[i] !== null ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-400')}">
+                                ${i + 1}
+                            </span>
+                        `).join('')}
+                    </div>
+
+                    <!-- Teks Soal -->
+                    <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-700 mb-5">
+                        <p class="text-base sm:text-lg font-bold text-white leading-relaxed">${evalState.currentIdx + 1}. ${qObj.q}</p>
+                    </div>
+
+                    <!-- Pilihan Jawaban A, B, C, D -->
+                    <div class="space-y-3">
+                        ${qObj.opts.map((opt, oIdx) => `
+                            <button onclick="selectEvalOption(${oIdx})" class="w-full text-left p-4 rounded-2xl border-2 transition flex items-center gap-3 ${selected === oIdx ? 'bg-cyan-600/30 border-cyan-400 text-white' : 'bg-slate-800/90 border-slate-700 hover:border-cyan-500/50 text-slate-200'}">
+                                <span class="w-8 h-8 shrink-0 rounded-xl flex items-center justify-center font-display font-bold text-sm ${selected === oIdx ? 'bg-cyan-400 text-slate-950' : 'bg-slate-700 text-cyan-300'}">
+                                    ${String.fromCharCode(65 + oIdx)}
+                                </span>
+                                <span class="text-sm sm:text-base font-medium">${opt}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <!-- Tombol Navigasi Soal -->
+                    <div class="flex justify-between items-center mt-6 pt-4 border-t border-slate-700">
+                        <button onclick="prevEvalQuestion()" ${evalState.currentIdx === 0 ? 'disabled' : ''} class="px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm ${evalState.currentIdx === 0 ? 'bg-slate-800 text-slate-600 cursor-not-allowed' : 'bg-slate-700 hover:bg-slate-600 text-white'}">
+                            <i class="fa-solid fa-chevron-left mr-1"></i> Sebelumnya
+                        </button>
+
+                        <button onclick="nextEvalQuestion()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:opacity-90 text-white font-bold text-xs sm:text-sm shadow-lg">
+                            ${evalState.currentIdx === 14 ? 'Selesai & Lihat Nilai <i class="fa-solid fa-flag-checkered ml-1"></i>' : 'Soal Berikutnya <i class="fa-solid fa-chevron-right ml-1"></i>'}
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startEvaluasi() {
+            const name = document.getElementById('eval-name').value.trim();
+            const cls = document.getElementById('eval-class').value;
+            if (!name || !cls) {
+                AudioEngine.playWrong();
+                showToast('Harap masukkan Nama Lengkap dan pilih Kelasmu terlebih dahulu!');
+                return;
+            }
+            AudioEngine.playClick();
+            evalState.studentName = name;
+            evalState.studentClass = cls;
+            evalState.started = true;
+            evalState.currentIdx = 0;
+            evalState.answers = new Array(15).fill(null);
+            evalState.finished = false;
+            renderEvaluasi(document.getElementById('app-container'));
+        }
+
+        function selectEvalOption(oIdx) {
+            AudioEngine.playClick();
+            evalState.answers[evalState.currentIdx] = oIdx;
+            renderEvaluasi(document.getElementById('app-container'));
+        }
+
+        function prevEvalQuestion() {
+            if (evalState.currentIdx > 0) {
+                AudioEngine.playClick();
+                evalState.currentIdx--;
+                renderEvaluasi(document.getElementById('app-container'));
+            }
+        }
+
+        function nextEvalQuestion() {
+            if (evalState.answers[evalState.currentIdx] === null) {
+                AudioEngine.playWrong();
+                showToast('Kamu wajib memilih salah satu jawaban (A, B, C, atau D) sebelum melanjutkan!');
+                return;
+            }
+            AudioEngine.playClick();
+            if (evalState.currentIdx < 14) {
+                evalState.currentIdx++;
+                renderEvaluasi(document.getElementById('app-container'));
+            } else {
+                evalState.finished = true;
+                renderEvaluasi(document.getElementById('app-container'));
+            }
+        }
+
+        function renderEvaluasiResult(container) {
+            let correctCount = 0;
+            EvalQuestions.forEach((q, i) => {
+                if (evalState.answers[i] === q.ans) correctCount++;
+            });
+            // Rumus nilai: jumlah jawaban benar dibagi 15 dikali 100
+            const finalScore = Math.round((correctCount / 15) * 100);
+            userProgress.evalScore = finalScore;
+            saveProgress();
+
+            let predikat = '';
+            let badgeColor = '';
+            if (finalScore >= 90) {
+                predikat = 'SANGAT BAIK (A) — Master Sistem Komputer!';
+                badgeColor = 'text-emerald-400 border-emerald-400 bg-emerald-950/60';
+                AudioEngine.playVictory();
+            } else if (finalScore >= 75) {
+                predikat = 'BAIK (B) — Lulus & Kompeten!';
+                badgeColor = 'text-cyan-300 border-cyan-400 bg-cyan-950/60';
+                AudioEngine.playVictory();
+            } else if (finalScore >= 60) {
+                predikat = 'CUKUP (C) — Terus Berlatih!';
+                badgeColor = 'text-amber-300 border-amber-400 bg-amber-950/60';
+                AudioEngine.playCorrect();
+            } else {
+                predikat = 'PERLU BIMBINGAN (D) — Pelajari Kembali Materi';
+                badgeColor = 'text-rose-300 border-rose-400 bg-rose-950/60';
+                AudioEngine.playWrong();
+            }
+
+            setRobotMessage(`Evaluasi selesai! Nilai akhirmu adalah ${finalScore}. Cek pembahasan setiap soal di bawah ini!`);
+
+            container.innerHTML = `
+                <div class="space-y-6 max-w-4xl mx-auto">
+                    <!-- Kartu Skor Akhir -->
+                    <div class="glass-panel rounded-3xl p-6 sm:p-8 text-center border-2 border-cyan-400">
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">Hasil Evaluasi Sistem Komputer</h2>
+                        <p class="text-sm text-cyan-300 mt-1">${evalState.studentName} • Kelas ${evalState.studentClass} • SMP Negeri 2 Kalianda</p>
+
+                        <div class="my-6 inline-flex flex-col items-center justify-center w-36 h-36 rounded-full bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-600 p-1 shadow-2xl">
+                            <div class="w-full h-full rounded-full bg-slate-950 flex flex-col items-center justify-center">
+                                <span class="text-xs text-slate-400 font-bold">NILAI AKHIR</span>
+                                <span class="font-display text-4xl font-bold text-white">${finalScore}</span>
+                                <span class="text-[11px] text-cyan-300">${correctCount}/15 Benar</span>
+                            </div>
+                        </div>
+
+                        <div class="max-w-md mx-auto p-3 rounded-2xl border ${badgeColor} font-display font-bold text-sm sm:text-base">
+                            Predikat: ${predikat}
+                        </div>
+
+                        <div class="mt-6 flex flex-wrap justify-center gap-3">
+                            <button onclick="repeatEvaluasi()" class="px-5 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-sm shadow">
+                                <i class="fa-solid fa-rotate-right mr-1"></i> Ulangi Evaluasi
+                            </button>
+                            <button onclick="navigateTo('home')" class="px-5 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-white font-bold text-sm">
+                                <i class="fa-solid fa-house mr-1"></i> Kembali ke Beranda
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pembahasan Setiap Jawaban -->
+                    <div class="glass-panel rounded-3xl p-6 border border-slate-700">
+                        <h3 class="font-display text-xl font-bold text-white mb-4"><i class="fa-solid fa-book-open text-cyan-400 mr-1.5"></i> Pembahasan Lengkap 15 Soal</h3>
+                        <div class="space-y-4">
+                            ${EvalQuestions.map((q, i) => {
+                                const userAns = evalState.answers[i];
+                                const isRight = userAns === q.ans;
+                                return `
+                                    <div class="p-4 rounded-2xl bg-slate-900/90 border ${isRight ? 'border-emerald-500/40' : 'border-rose-500/40'}">
+                                        <div class="flex items-start justify-between gap-2 mb-1">
+                                            <span class="font-bold text-sm text-white">${i + 1}. ${q.q}</span>
+                                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold shrink-0 ${isRight ? 'bg-emerald-500/20 text-emerald-300' : 'bg-rose-500/20 text-rose-300'}">
+                                                ${isRight ? 'Benar ✓' : 'Salah ✗'}
+                                            </span>
+                                        </div>
+                                        <p class="text-xs text-slate-300">Jawaban Kamu: <strong class="${isRight ? 'text-emerald-300' : 'text-rose-300'}">${String.fromCharCode(65 + userAns)}. ${q.opts[userAns]}</strong></p>
+                                        ${!isRight ? `<p class="text-xs text-emerald-300 mt-0.5">Kunci Jawaban: <strong>${String.fromCharCode(65 + q.ans)}. ${q.opts[q.ans]}</strong></p>` : ''}
+                                        <p class="text-xs text-cyan-200 mt-2 bg-slate-800/90 p-2.5 rounded-xl"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i> <strong>Pembahasan:</strong> ${q.exp}</p>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function repeatEvaluasi() {
+            AudioEngine.playClick();
+            evalState.started = false;
+            evalState.finished = false;
+            evalState.currentIdx = 0;
+            evalState.answers = new Array(15).fill(null);
+            renderEvaluasi(document.getElementById('app-container'));
+        }
+
+        /* =========================================================================
+           14. MENU PROFIL PENGEMBANG
+           ========================================================================= */
+        function renderPengembang(container) {
+            setRobotMessage('Ini adalah profil guru pengembang media pembelajaran Computer Lab Adventure SMP Negeri 2 Kalianda!');
+            container.innerHTML = `
+                <div class="glass-panel rounded-3xl p-6 sm:p-10 max-w-3xl mx-auto border-2 border-purple-500/40 relative overflow-hidden">
+                    <div class="absolute -right-12 -top-12 w-48 h-48 bg-cyan-500/20 rounded-full blur-2xl"></div>
+                    <div class="flex flex-col md:flex-row items-center gap-6 relative z-10">
+                        <!-- Avatar Ilustrasi Guru Informatika -->
+                        <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-3xl bg-gradient-to-br from-cyan-400 via-blue-600 to-purple-600 p-1 shadow-2xl shrink-0">
+                            <div class="w-full h-full bg-slate-900 rounded-[22px] flex flex-col items-center justify-center text-center p-2">
+                                <i class="fa-solid fa-laptop-code text-5xl text-cyan-300 mb-2"></i>
+                                <span class="text-[10px] font-bold tracking-wider uppercase text-purple-300">Educator & Developer</span>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 text-center md:text-left space-y-3">
+                            <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-bold">PROFIL PENGEMBANG MEDIA PEMBELAJARAN</span>
+                            <h2 class="font-display text-2xl sm:text-3xl font-bold text-white">IRDYANA LISTYA, S.Kom.</h2>
+                            <p class="text-purple-300 font-semibold text-sm sm:text-base">Guru Mata Pelajaran Informatika • SMP Negeri 2 Kalianda</p>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-left text-xs sm:text-sm">
+                                <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700">
+                                    <span class="text-slate-400 block text-[11px]">Jabatan</span>
+                                    <strong class="text-white">Guru Informatika</strong>
+                                </div>
+                                <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700">
+                                    <span class="text-slate-400 block text-[11px]">Instansi</span>
+                                    <strong class="text-cyan-300">SMP Negeri 2 Kalianda</strong>
+                                </div>
+                                <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700">
+                                    <span class="text-slate-400 block text-[11px]">Mata Pelajaran / Kelas</span>
+                                    <strong class="text-white">Informatika / Kelas VII (Fase D)</strong>
+                                </div>
+                                <div class="bg-slate-900/90 p-3 rounded-xl border border-slate-700">
+                                    <span class="text-slate-400 block text-[11px]">Materi & Tahun Pelajaran</span>
+                                    <strong class="text-purple-300">Sistem Komputer • 2026/2027</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* =========================================================================
+           15. MODAL PETUNJUK PENGGUNAAN & NOTIFIKASI TOAST
+           ========================================================================= */
+        function openHelpModal() {
+            AudioEngine.playClick();
+            const body = document.getElementById('modal-body');
+            body.innerHTML = `
+                <h3 class="font-display text-2xl font-bold text-cyan-300 mb-3">
+                    <i class="fa-solid fa-circle-question mr-1.5"></i> Petunjuk Penggunaan Aplikasi
+                </h3>
+                <ul class="space-y-2.5 text-xs sm:text-sm text-slate-200 leading-relaxed">
+                    <li class="bg-slate-900/80 p-3 rounded-xl"><strong>1. Materi Belajar:</strong> Pelajari 5 subbab Sistem Komputer, klik tombol <em>Dengarkan Materi</em> untuk audio narasi, dan kerjakan kuis mini di setiap akhir bab.</li>
+                    <li class="bg-slate-900/80 p-3 rounded-xl"><strong>2. Simulasi Lab:</strong> Klik Keyboard dan ketik kata <code>INFORMATIKA</code> untuk mengamati perjalanan data dari Input, Process, Output, hingga Storage.</li>
+                    <li class="bg-slate-900/80 p-3 rounded-xl"><strong>3. Praktikum & Arena Game:</strong> Selesaikan 4 aktivitas praktikum serta 4 game edukatif untuk mengumpulkan bintang dan medali.</li>
+                    <li class="bg-slate-900/80 p-3 rounded-xl"><strong>4. LKPD Digital & Evaluasi:</strong> Isi LKPD Digital (bisa dicetak/diunduh) lalu uji kemampuanmu pada 15 soal Evaluasi Akhir.</li>
+                    <li class="bg-slate-900/80 p-3 rounded-xl"><strong>5. Pengaturan Suara:</strong> Gunakan tombol Musik, Suara, dan Slider Volume di bagian atas layar sesuai kenyamananmu.</li>
+                </ul>
+            `;
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function showToast(message) {
+            const body = document.getElementById('modal-body');
+            body.innerHTML = `
+                <div class="text-center py-2">
+                    <div class="w-14 h-14 mx-auto rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mb-3">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <h4 class="font-display text-lg font-bold text-white mb-2">Info Asisten Robo-KAI</h4>
+                    <p class="text-sm text-slate-200 mb-4">${message}</p>
+                    <button onclick="closeModal()" class="px-5 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">Mengerti</button>
+                </div>
+            `;
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            AudioEngine.playClick();
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        /* =========================================================================
+           16. INISIALISASI SAAT HALAMAN DIMUAT
+           ========================================================================= */
+        window.onload = function () {
+            updateHeaderStats();
+            renderHome(document.getElementById('app-container'));
+            if (window.speechSynthesis) {
+                window.speechSynthesis.getVoices();
+            }
+        };
+    </script>
+</body>
+</html>
